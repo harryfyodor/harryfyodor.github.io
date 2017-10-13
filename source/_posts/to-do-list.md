@@ -27,7 +27,7 @@ tags: ["机器学习", "语音识别", "深度学习"]
 
 ### CS231n Convolutional Neural Networks for Visual Recognition. 
 
-这一门可有三个代码作业，一定要完成。
+这一门课有三个代码作业，一定要完成。
 * Assignment #1: Image Classification, kNN, SVM, Softmax, Neural Network
 * Assignment #2: Fully-Connected Nets, Batch Normalization, Dropout, Convolutional Nets
 * Assignment #3: Image Captioning with Vanilla RNNs, Image Captioning with LSTMs, Network Visualization, Style Transfer, Generative Adversarial Networks
