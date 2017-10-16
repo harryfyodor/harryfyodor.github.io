@@ -1,5 +1,5 @@
 !/bin/bash
 
 git add .
-git commit -m "update msg"
+git commit -m "$(date +%Y%m%d-%H%M)"
 git push origin master
