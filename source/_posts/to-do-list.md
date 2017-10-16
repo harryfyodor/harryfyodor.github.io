@@ -16,28 +16,6 @@ tags: ["机器学习", "语音识别", "深度学习"]
 
 这一门课非常数学，非常理论。但是作为一门实践性很强的课，没有配套代码是不够的。因此想要配合《机器学习实战》这本书（远远不限于此书），把机器学习的基础代码都实现一遍。这门课讲的内容可能还有一些缺失，比方说决策树没有讲，提升方法没有讲，等等。这些其他的部分应该也要去学习。计划配合李航的《统计学习方法》进行理论上面的学习。
 
-#### Supervised learning
-* Leaner Regression
-* Logistic Regression
-* Generative learning algorithms (Gaussian discriminant analysis. Naive Bayes)
-* Support vector 
-* Perceptron algorithm
-
-#### Unspervised learning
-* K-means
-* Mixture of Gaussians
-* PCA (Principal components analysis)
-* SVD
-* ICA (Independent components analysis)
-
-#### Learning theory
-* Feature selection, Regularization and Model Selection
-* etc
-
-#### 其它没有在CS229涉及，但是在其它书里涉及的
-* 决策树
-* 
-
 课程目标：
 1. 完成一个能够使用的简单的机器学习库，至少包括CS229中提到的所有基本的算法
 2. 对机器学习有一个全面的，较为深刻的认识

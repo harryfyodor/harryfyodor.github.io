@@ -25,6 +25,5 @@
     {% include '_script/comments.swig' %}
     {% include '_script/libs.swig' %}
     {% include '_script/theme.swig' %}
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
   </body>
 </html>
