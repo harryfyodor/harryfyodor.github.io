@@ -22,6 +22,9 @@
         <i class="iconfont icon-up"></i>
       </div>
     </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     {% include '_script/comments.swig' %}
     {% include '_script/libs.swig' %}
     {% include '_script/theme.swig' %}
