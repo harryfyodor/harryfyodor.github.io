@@ -57,7 +57,7 @@ $$ w\left [ n \right ]=0.54-0.46cos\left ( \frac{2\pi n}{M} \right ) $$
 
 DFT的公式如下所示：
 
-X\left [ k \right ]=\sum_{n=0}^{M-1}x\left [ n \right ]e^{-\frac{j2\pi kn}{M}}
+$$ X\left [ k \right ]=\sum_{n=0}^{M-1}x\left [ n \right ]e^{-\frac{j2\pi kn}{M}} $$
 
 DFT想要取多少个频率的值可以自己确定。没有找到什么有关的资料可以给出大致的范围。
 
@@ -74,7 +74,7 @@ DFT想要取多少个频率的值可以自己确定。没有找到什么有关�
 
 可以通过下面的图非常形象地了解整一个过程。（三个图分别称为左边图，下边图和warping function图）
 
-
+![测试](parametrization.jpeg)
 
 从理解的角度，要看下看到左：一个频域的数据通过warping function，变型成左边的信号，然后再过一系列的三角滤波器，把掉落到各个滤波器的能量分别加以统计，得到结果。这样处理之后，就相当于对频率信号做了下面图的滤波器的处理。
 
@@ -92,11 +92,11 @@ DFT想要取多少个频率的值可以自己确定。没有找到什么有关�
 
 速率特征:
 
-\Delta c(t)=c(t+\tau )-c(t-\tau )
+$$ \Delta c(t)=c(t+\tau )-c(t-\tau ) $$
 
 加速度特征:
 
-\Delta\Delta c(t)=\Delta c(t+\tau )-\Delta c(t-\tau )
+$$ \Delta\Delta c(t)=\Delta c(t+\tau )-\Delta c(t-\tau ) $$
 
 ### 最后
 对每一个帧做上述处理之后，就可以得到很多歌39维的MFCC特征。这些特征就是接下来要进行训练的“材料”了。
