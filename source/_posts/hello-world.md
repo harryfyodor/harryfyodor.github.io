@@ -38,3 +38,7 @@ $ hexo deploy
 ```
 
 More info: [Deployment](https://hexo.io/docs/deployment.html)
+
+
+
+{% asset_img /hello-world/megumi.jpg This is an example image %}
