@@ -168,7 +168,7 @@ $$ p(X|\lambda )=\sum_{i=1}^{N}\alpha_{T}(i) $$
 
 这么说或许有点复杂，结合公式和图就能很好地理解了。
 
-1. 初始化
+* 初始化
 
 $$ V_{0}(i)=1 $$
 
@@ -176,23 +176,23 @@ $$ V_{0}(j)=0 \ if j \neq 0 $$
 
 $$ bt_{0}(j)=0 $$
 
-2. 循环
+* 循环
 
 $$ V_{t}(j)=\max_{i=1}^{N}V_{t-1}(i)a_{ij}b_{j}(x_{t}) $$
 
-<img src="vertibi-max.jpeg" style="margin-left:50%;transform: translateX(-50%);">
+<img src="viterbi-max.jpeg" style="margin-left:50%;transform: translateX(-50%);">
 
 $$ bt_{0}(j)=\mathop{argmax}_{i=1}^{N}V_{t-1}(i)a_{ij}b_{j}(x_{t}) $$
 
-<img src="vertibi-pointer.jpeg" style="margin-left:50%;transform: translateX(-50%);">
+<img src="viterbi-pointer.jpeg" style="margin-left:50%;transform: translateX(-50%);">
 
-3. 终止
+* 终止
 
 $$ P^{*}=V_{T}(s_{E})=\max_{i=1}^{N}V_{T}(i) $$
 
 $$ s_{T}^{*}=bt_{T}(q_{E})=\mathop{argmax}_{i=1}^{N}V_{T}(i) $$
 
-<img src="vertibi-bp.jpeg" style="margin-left:50%;transform: translateX(-50%);">
+<img src="viterbi-bp.jpeg" style="margin-left:50%;transform: translateX(-50%);">
 
 为了最后得到那一条路线，我们在算法进行的过程中可以顺便把前一个的状态记录下来。这里就用来一个指针，可以在最后回溯。
 

@@ -1,3 +1,22 @@
+---
+title: GMM-HMM模型（Kaldi实践篇）
+tags: ["语音识别"]
+---
+
+总述
+
+train mono
+
+gmm-init-mono
+
+compile-train-graphs
+
+align-equal-compiled
+
+gmm-est
+
+
+
 #### Log Domain防止Underflow
 在BW算法的实现过程中，有可能遇到下面的underflow的问题。比方说前向算法的这个公式：
 
