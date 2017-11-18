@@ -64,7 +64,7 @@ $$ \overline{0} \bigoplus a=a $$| $$ \overline{1} \bigotimes a=a $$
 None | None
 $$ z\bigotimes (x\bigoplus y)  = (z\bigotimes x) \bigoplus (z \bigotimes y) $$ |
 
-从上面的图其实就可以知道三者的关系，半环最宽泛，场最严格，环居其中。我们可以看下面的图。
+从上面的图其实就可以知道三者的关系，半环最宽泛，场最严格，环居其中。
 
 下面是几个常用的半环
 
@@ -96,6 +96,6 @@ WFST表示为$$ (\Sigma, \Delta, Q, E, I, F, \lambda, \rho) $$
 
 $$ T(x, y) = \mathop{\bigoplus}_{\pi\in R(I,x,y,F)}\lambda(\rho[\pi])\bigotimes w[\pi] \bigotimes \rho(n[\pi]) $$
 
-这一条公式表示了一个转换，从I开始到F，输入x，得到y。其中的$$ \pi $$表示整体的结构，w表示其中的一条路径权重做x运算进行结合。上面WFST的公式含义就是：对所有路径进行$$ \bigotimes $$操作，然后用$$ \bigoplus $$操作结合起来。
+这一条公式表示了一个转换。这个转换从I开始到F，输入x，得到y。其中的$$ \pi $$表示整体的结构，w表示其中的一条路径权重做$$ \bigotimes $$运算进行结合。上面WFST的公式含义就是：对所有路径上的权重进行$$ \bigotimes $$操作，然后用$$ \bigoplus $$操作结合起来。
 
 到此，我已经介绍完WFST表示的一些基础的知识。
