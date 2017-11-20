@@ -3,3 +3,11 @@ composition
 determization
 
 openfst
+
+zeor removal
+
+determinization
+
+weight pushing
+
+minization
