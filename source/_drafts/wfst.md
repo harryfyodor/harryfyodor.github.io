@@ -1,13 +1,10 @@
 目录
 composition
-determization
 
-openfst
+Determization
 
-zeor removal
+RmEpsilon
 
-determinization
+Weight Pushing
 
-weight pushing
-
-minization
+Minization
