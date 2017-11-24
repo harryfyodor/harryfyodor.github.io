@@ -19,6 +19,8 @@ Determinization是WFST优化的一个重要算法。它的意思是确定化。�
 ### 算法
 下面是Moris论文中的伪代码：
 
+<img src="algorithm.png" style="margin-left:50%;transform: translateX(-50%);">
+
 上面的代码直接看可能有点吃力，在这里对该整体进行一个阐述。首先，该算法是在原本的图的基础上构建一个新的图，因此我们需要对一些状态进行聚合，然后新建一些弧。而状态的产生也正是依赖这些弧。产生弧的过程，也是整个图产生的过程。弧的产生需要有起始状态，标签，权重，目标状态。
 * 从源头开始，初始化，将起始状态的权重初始化为$$ \bio 1 $$。
 * 计算权重：从起点开始，对于相同的输入标签，我们通过$$ $$将起始权重和当前弧进行操作。我们可以获得一系列的值。最后整体通过一个$$$$，便可以得到一个权重。
@@ -28,9 +30,13 @@ Determinization是WFST优化的一个重要算法。它的意思是确定化。�
 ### 手算
 下面，我们举一个例子，将下面的WFSA确定化。这里我们使用tropical ring的运算规则。
 
+<img src="before.png" style="margin-left:50%;transform: translateX(-50%);">
+
 手推如下：
 
 我们最终可以的到结果如下所示：
+
+<img src="after.png" style="margin-left:50%;transform: translateX(-50%);">
 
 可以看到，推导的结果和最终结果一致。
 
