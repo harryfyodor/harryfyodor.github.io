@@ -34,7 +34,7 @@ Determinization是WFST优化的一个重要算法。它的意思是确定化。�
 
 手推如下：
 
-<img src="before.png" style="margin-left:50%;transform: translateX(-50%);">
+<img src="hand.jpg" style="margin-left:50%;transform: translateX(-50%);">
 
 我们最终可以的到结果如下所示：
 
