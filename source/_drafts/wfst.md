@@ -3,8 +3,3 @@ composition
 
 Determization
 
-RmEpsilon
-
-Weight Pushing
-
-Minization
