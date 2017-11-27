@@ -37,6 +37,6 @@ hopcroft():
 
 下面可以看看简单的推导：
 
-<img src="minimization.jpg" style="margin-left:50%;transform: translateX(-50%);">
+<img src="minimization.jpg" style="margin-left:50%;transform: translateX(-50%); height: 400px;">
 
 如果想要更加深入地了解这一个算法，可以到网上查找相关的资料。
