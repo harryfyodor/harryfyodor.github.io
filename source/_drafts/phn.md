@@ -8,3 +8,4 @@ local/syllab/run_syllabs.sh
 
 貌似可以用来进行kws数据准备的
 local/kws_data_prep_syll
+
