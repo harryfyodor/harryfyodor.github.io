@@ -7,7 +7,7 @@ date: 2017-10-08 00:37:58
 
 喜欢文学，关注技术。
 
-想要联系我可以发邮件给我，邮箱地址：harryfyodor At 163 Dot com。
+想要联系我可以发邮件，邮箱地址：harryfyodor At 163 Dot com。
 
 本博客所有原创文章采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">知识共享署名-非商业性使用-禁止演绎 3.0 未本地化版本许可协议</a>进行许可。
 

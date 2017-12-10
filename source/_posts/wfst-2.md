@@ -1,5 +1,5 @@
 ---
-title: WFST详解#1
+title: WFST详解#2
 date: 2017-11-19 23:34:00
 tags: ["语音识别"]
 ---
