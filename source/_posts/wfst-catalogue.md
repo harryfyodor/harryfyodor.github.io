@@ -1,6 +1,6 @@
 ---
 title: WFST详解#目录
-date: 2017-11-26 19:25:00
+date: 2017-12-10 15:37:00
 tags: ["语音识别"]
 ---
 
@@ -14,6 +14,7 @@ tags: ["语音识别"]
 * [Epsilon-Removal算法](https://blog.harryfyodor.xyz/2017/11/26/wfst-5/)
 * [Weight-Pushing算法](https://blog.harryfyodor.xyz/2017/11/26/wfst-6/)
 * [Minimization算法](https://blog.harryfyodor.xyz/2017/11/27/wfst-7/)
+
 番外：
 * [语音识别解码器简介](https://blog.harryfyodor.xyz/2017/11/13/decoder-intro/)
 
