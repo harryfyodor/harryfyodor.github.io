@@ -30,7 +30,7 @@ Determinization是WFST优化的一个重要算法。它的意思是确定化。�
 
 
 ### 手算
-下面，我们举一个例子，将下面的WFSA确定化。这里我们使用Tropical ring的运算规则。
+下面，我们举一个例子，将下面的WFSA确定化。这里我们使用Tropical semiring的运算规则。
 
 <img src="before.png" style="margin-left:50%;transform: translateX(-50%);">
 
@@ -49,6 +49,6 @@ Determinization是WFST优化的一个重要算法。它的意思是确定化。�
 
 <img src="wfst-det.png" style="margin-left:50%;transform: translateX(-50%);">
 
-分析一下上面的变换。第一幅图是一个普通的WFST，通过det操作之后转换成了另一个。对比我们可以发现初始权重是转变成了$$ {(0, \epsilon, 0.2)} $$。转移的弧上的权重我们选择一个相同输出中，权重最小的(Tropical ring的min)。而弧上的输出则根据$$ X \bigvee Y $$来确定，在图上的情况是$$ X \bigvee Y=\epsilon $$。到达的目标状态根据转移的弧上面的数值进行处理（1.2-0.5=0.7,0.5-0.5=0），组成三元组。
+分析一下上面的变换。第一幅图是一个普通的WFST，通过det操作之后转换成了另一个。对比我们可以发现初始权重是转变成了$$ {(0, \epsilon, 0.2)} $$。转移的弧上的权重我们选择一个相同输出中，权重最小的(Tropical semiring的min)。而弧上的输出则根据$$ X \bigvee Y $$来确定，在图上的情况是$$ X \bigvee Y=\epsilon $$。到达的目标状态根据转移的弧上面的数值进行处理（1.2-0.5=0.7,0.5-0.5=0），组成三元组。
 
 最后，我们要把状态的符号映射到普通的符号上，并且对终止的状态进行压缩。压缩的方法很简单，就是创造一个新的终止状态，原本的终止状态转移向它。然后把原本终止状态的权重和三元组符号转移到弧上。如图所示，非常清晰。
