@@ -10,7 +10,7 @@ tags: ["语音识别"]
 * [Semiring入门](https://blog.harryfyodor.xyz/2017/11/19/wfst-1/)
 * [WFST基本算法](https://blog.harryfyodor.xyz/2017/11/19/wfst-2/)
 * [Composition算法](https://blog.harryfyodor.xyz/2017/11/21/wfst-3/)
-* [Determinzation算法](https://blog.harryfyodor.xyz/2017/11/24/wfst-4/)
+* [Determinization算法](https://blog.harryfyodor.xyz/2017/11/24/wfst-4/)
 * [Epsilon-Removal算法](https://blog.harryfyodor.xyz/2017/11/26/wfst-5/)
 * [Weight-Pushing算法](https://blog.harryfyodor.xyz/2017/11/26/wfst-6/)
 * [Minimization算法](https://blog.harryfyodor.xyz/2017/11/27/wfst-7/)

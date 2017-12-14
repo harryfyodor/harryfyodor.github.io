@@ -13,14 +13,14 @@ WFST定义的是一种有向图。图的边有输入label，输出label，权重
 
 重点认识两个方面的内容。
 * 概念：半环的概念，FSA，FST，WFST，WFSA的概念。
-* 算法：Composition，Determinisation，Minimisation。
+* 算法：Composition，Determinization，Minimisation。
 
 如果想要更加深入了解WFST的相关内容，Moris的经典论文[《Speech Recognition with Weighted Finite-state Transducer》](http://www.cs.nyu.edu/~mohri/pub/hbka.pdf)是必读的。
 
 ### 三大操作
 WFST在语音识别解码器中有三个重要的操作，这三个操作在构建解码器的时候发挥着各自的作用。
 * Composition：把两个WFST合成。假设有一个WFST，称为A，另一个，称为B。A的输出值是B的输入值，那么合成就是把中间部分”合并“掉，生成一个WFST。这个WFST让A的输入转化成B的输出。
-* Determinisation: 同一个状态输出的转化中，一个输入label只能有一个输出label。
+* Determinization: 同一个状态输出的转化中，一个输入label只能有一个输出label。
 * Minimisation: 简化当前的WFST，去除冗余的转化。这个操作之后的WFST与之前的保持等价。
 
 ### 语音识别
