@@ -1,7 +1,7 @@
 ---
 title: WFST详解#5
 date: 2017-11-26 17:05:00
-tags: ["语音识别"]
+tags: ["语音识别", "WFST"]
 ---
 # Epsilon-Removal
 

@@ -1,7 +1,7 @@
 ---
 title: WFST详解#6
 date: 2017-11-26 19:25:00
-tags: ["语音识别"]
+tags: ["语音识别", "WFST"]
 ---
 # Weight-Pushing
 

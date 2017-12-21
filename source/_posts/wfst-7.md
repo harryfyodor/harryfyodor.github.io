@@ -1,7 +1,7 @@
 ---
 title: WFST详解#7
 date: 2017-11-27 20:31:00
-tags: ["语音识别"]
+tags: ["语音识别", "WFST"]
 ---
 # Minimization
 

@@ -1,7 +1,7 @@
 ---
 title: WFST详解#4
 date: 2017-11-24 12:02:00
-tags: ["语音识别"]
+tags: ["语音识别", "WFST"]
 ---
 # Determinzation
 

@@ -1,7 +1,7 @@
 ---
 title: WFST详解#3
 date: 2017-11-21 0:21:00
-tags: ["语音识别"]
+tags: ["语音识别", "WFST"]
 ---
 # Composition
 
