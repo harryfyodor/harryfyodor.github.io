@@ -41,7 +41,6 @@ Enhanced CM -> 每个循环排除一个acoustic model
 类别：Phone based，Confused Matrix
 机构：University College Dublin，爱尔兰
 
-
 #### Fusion Strategies -> robust
 Robust acoustic features
 -> train individual acoustic models
