@@ -78,5 +78,5 @@ theme: polar
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: harry@harryfyodor.xyz:/home/harry/git/hexo.git
+  repo: git@github.com:harryfyodor/harryfyodor.github.io.git
   branch: master
