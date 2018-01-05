@@ -1,3 +1,9 @@
+---
+title: 关键词检索QbE-STD论文笔记
+date: 2018-1-4 13:12:00
+tags: ["语音识别", "关键词检索"]
+---
+
 常用QbE-STD有以下的几个步骤：
 * 训练phone decoder
 * 统计测试数据每一帧属于每一个phone分布的概率，生成Posteriorgram
