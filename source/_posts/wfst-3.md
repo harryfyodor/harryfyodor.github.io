@@ -5,7 +5,7 @@ tags: ["语音识别", "WFST"]
 ---
 # Composition
 
-> 本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的[目录](https://blog.harryfyodor.xyz/2017/12/10/wfst-catalogue/)，欢迎您的到来～
+> 本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的[目录](https://pages.harryfyodor.xyz/2017/12/10/wfst-catalogue/)，欢迎您的到来～
 
 ### 概念
 本文讲解WFST的一个重要的算法：Composition。这个算法非常重要。在语音识别中，这个算法将三音素模型的概率分布映射到最后的句子序列。
