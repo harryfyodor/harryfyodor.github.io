@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="说话人识别"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,机器学习,说话人识别," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/"/>
+
+
+<meta name="description" content="最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。 说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。 说话人识别技术传统方法的整体流程">
+<meta name="keywords" content="语音识别,机器学习,说话人识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说话人识别">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。 说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。 说话人识别技术传统方法的整体流程">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-10T12:36:05.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说话人识别">
+<meta name="twitter:description" content="最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。 说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。 说话人识别技术传统方法的整体流程">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 说话人识别 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          说话人识别
+        
+      </h1>
+
+      <time class="post-time">
+          May 10 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。</p>
+<p>说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。</p>
+<p>说话人识别技术传统方法的整体流程如下所示：</p>
+<ol>
+<li>使用数据训练一个与说话人无关的UBM模型。</li>
+<li>使用说话人自适应的算法（MAP或者MLLR）对特定说话人训练GMM，并每个GMM成分的均值组合成一个向量，被称为均值超矢量。</li>
+<li>从均值超矢量提取i-vector特征。i-vector的提取算法可以看做是JFA（联合因子分析）的简化版本。</li>
+<li>使用LDA或者PLDA鉴别。使用LDA/PLDA将测试语音和训练模型的i-vector特征重新投影之后，对比其cosine距离，就可以打分了。设置阈值，判别是不是同一个人。</li>
+</ol>
+<p>或许有人会说，现在是神经网络的时代，为什么不直接上神经网络呢？在知乎上有一个这样的问题：<a href="https://www.zhihu.com/question/67471632" target="_blank" rel="noopener">为什么在说话人识别技术中，PLDA面对神经网络依然坚挺？</a>这是一个有趣且值得关注的问题。在这个问题底下有几个有意思的回答，提到几个点，在这里也做一个归纳。</p>
+<ol>
+<li>数据量问题。神经网络对于数据量的要求非常高。Google为什么能够屡屡出一些深度学习方面的成果，比如说话人识别中d-vector，关键词当中的LSTM模型等，其中非常主要的原因就是数据。</li>
+<li>分类？深度学习在不少情况下，需要把一个任务直接或者间接地转化成一个分类问题。但是说话人识别任务明显不能当成简单的分类问题，毕竟如果根据分类问题的角度来考虑，网络最后一层的输出节点无法穷尽。</li>
+<li>Embedding？如果要使用深度学习的方法，一般就是将之转化成编码问题，将当前的数据通过神经网络映射到另一个空间当中。这里需要这种映射能够让同说话人的特征更加接近，不同说话人差异更大。在这个层面上思考是说话人识别与深度学习结合最热门的方向。</li>
+<li>自编码？我认为自编码如果能够达到很好的效果，那将是一种“最理想”的方法。但是深度学习在非监督学习上面常常比较难做到令人满意的效果。这一方面的有太大的空间。</li>
+</ol>
+<p>因为上面的一些原因，继续深入学习说话人识别传统方法仍然非常重要，非常有意义。但是同时，我们也应该继续密切关注深度学习在其中发挥的作用，与时俱进。毕竟现在一切技术都太容易过时，不时时刻刻追赶，一下就落后了。</p>
+<p>针对说话人识别，我还会写一些文章详细介绍上面的传统方法，三五篇左右。希望能够一直更，不要坑（笑）。</p>
+<p>reference:</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/63978977" target="_blank" rel="noopener">说话人识别整体流程</a></li>
+<li><a href="https://blog.csdn.net/xmu_jupiter/article/details/47209961" target="_blank" rel="noopener">说话人识别相关概念</a></li>
+<li><a href="https://speechlab.sjtu.edu.cn/pages/sw121/homepage/2016/04/28/Code-Based-GMM-UBM-Tutorial/" target="_blank" rel="noopener">GMM+UBM介绍</a></li>
+<li><a href="https://www.inf.ed.ac.uk/teaching/courses/asr/2015-16/asr10-adapt.pdf" target="_blank" rel="noopener">说话人自适应</a></li>
+<li><a href="http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf" target="_blank" rel="noopener">i-vector的提取公式</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+			<a href="/tags/说话人识别/">说话人识别</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/04/18/recently/">
+        <span class="next-text nav-default">整理一些东西</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2018/05/10/speaker_recognition/';
+
+  var disqus_title = "说话人识别";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
