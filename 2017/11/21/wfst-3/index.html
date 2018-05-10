@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="WFST详解#3"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,WFST," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/"/>
+
+
+<meta name="description" content="Composition 本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  概念本文讲解WFST的一个重要的算法：Composition。这个算法非常重要。在语音识别中，这个算法将三音素模型的概率分布映射到最后的句子序列。 假设有两个WFST：A和B，如果A的输出是B的输入，那么便可以将二者合并起来，得到一个新的WFST：A的输入直接映射到B的输出。举一个具体的">
+<meta name="keywords" content="语音识别,WFST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WFST详解#3">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="Composition 本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  概念本文讲解WFST的一个重要的算法：Composition。这个算法非常重要。在语音识别中，这个算法将三音素模型的概率分布映射到最后的句子序列。 假设有两个WFST：A和B，如果A的输出是B的输入，那么便可以将二者合并起来，得到一个新的WFST：A的输入直接映射到B的输出。举一个具体的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/algorithm.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/first.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/second.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/hand.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/out.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/rmE.png">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WFST详解#3">
+<meta name="twitter:description" content="Composition 本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  概念本文讲解WFST的一个重要的算法：Composition。这个算法非常重要。在语音识别中，这个算法将三音素模型的概率分布映射到最后的句子序列。 假设有两个WFST：A和B，如果A的输出是B的输入，那么便可以将二者合并起来，得到一个新的WFST：A的输入直接映射到B的输出。举一个具体的">
+<meta name="twitter:image" content="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/algorithm.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> WFST详解#3 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          WFST详解#3
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 21 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="Composition"><a href="#Composition" class="headerlink" title="Composition"></a>Composition</h1><blockquote>
+<p>本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的<a href="https://pages.harryfyodor.xyz/2017/12/10/wfst-catalogue/">目录</a>，欢迎您的到来～</p>
+</blockquote>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>本文讲解WFST的一个重要的算法：Composition。这个算法非常重要。在语音识别中，这个算法将三音素模型的概率分布映射到最后的句子序列。</p>
+<p>假设有两个WFST：A和B，如果A的输出是B的输入，那么便可以将二者合并起来，得到一个新的WFST：A的输入直接映射到B的输出。举一个具体的例子来说，假设有一个WFST将小写字母映射到大写字母，另一个WFST将大写字母映射到单词，合并就是直接将小写字母映射到单词。</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>根据Moris经典的论文，Composition算法严格表示如下所示：</p>
+<p><img src="algorithm.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>让我们分析一下上面算法的流程：</p>
+<ul>
+<li>用Q来保留在合并之后会出现的状态，用S队列来保留需要用来遍历的点的组合（Q和S都由两边的WFST的一个状态组成，初始状态是（0，0））</li>
+<li>进入循环之后，从S中取出一组状态，如果这组状态是两边的起始点或者终点，计算一下新的权重</li>
+<li>获取到一组状态之后，分别从着两个状态出发，记录下这两个状态出去的弧的信息，进行对比，如果能够组合成一组输入输出，记录新的一个状态组合</li>
+<li>如果这个组合在Q中没有出现，则是新的组合，还需要遍历，加入S当中，否则不需要再遍历</li>
+<li>获取到一个组合，能够构成一个新弧，将新的弧加入E中</li>
+<li>不停循环，直到S为空为止</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>上面的算法过于理论，我们一起来根据上面的算法实际推导一下。首先，我们手里有两个WFST，如下所示：</p>
+<p><img src="first.png" style="margin-left:50%;transform: translateX(-50%);"><br>（第一个WFST）</p>
+<p><img src="second.png" style="margin-left:50%;transform: translateX(-50%);"><br>（第二个WFST）</p>
+<p>下面，我们将这两个WFST合并起来。下图为手推过程，不算很严谨，但是每一个循环都写到了，理解上应该不难。</p>
+<p><img src="hand.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>我们可以用OpenFST进行直接的检验。计算出来的结果如下所示：</p>
+<p><img src="out.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>我们可以看到，根据算法手推和正确结果是一致的。</p>
+<h3 id="epsilon的情况"><a href="#epsilon的情况" class="headerlink" title="epsilon的情况"></a>epsilon的情况</h3><p>当存在空转移（epsilon to epsilon）的时候，合并之后会产生很多冗余的边。因此在这里，我们引入filter来解决这个问题。在合并的时候多合并一个filter的WFST，就可以达到去除冗余的目的。</p>
+<p><img src="rmE.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>上面展示了两个filter以及filter的使用方式。选择filter的时候要根据实际情况，如果需要保留和原本一样的空转移数，则用2状态的filter，如果想要合并成更精简的WFST，就使用3状态的filter。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>OpenFST教程：<a href="http://www.openfst.org/twiki/pub/FST/FstSltTutorial/part1.pdf" target="_blank" rel="noopener">http://www.openfst.org/twiki/pub/FST/FstSltTutorial/part1.pdf</a></li>
+<li>一个讲解WFST很好的博客：<a href="http://blog.csdn.net/l_b_yuan/article/details/50890261" target="_blank" rel="noopener">http://blog.csdn.net/l_b_yuan/article/details/50890261</a></li>
+<li>必读经典论文：<a href="https://cs.nyu.edu/~mohri/pub/hbka.pdf" target="_blank" rel="noopener">https://cs.nyu.edu/~mohri/pub/hbka.pdf</a></li>
+</ul>
+<!--
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ fstcompile -isymbols=io.txt -osymbols=io.txt first.txt first.fst</span><br><span class="line">$ fstdraw -isymbols=io.txt -osymbols=io.txt first.fst &gt;first.dot</span><br><span class="line">$ dot -Tps first.dot&gt;first.ps</span><br><span class="line">$ fstcompile -isymbols=io.txt -osymbols=io.txt second.txt second.fst</span><br><span class="line">$ fstdraw -isymbols=io.txt -osymbols=io.txt second.fst &gt;second.dot</span><br><span class="line">$ dot -Tps second.dot&gt;second.ps</span><br><span class="line">$ fstcompose first.fst second.fst out.fst</span><br><span class="line">$ fstdraw -isymbols=io.txt -osymbols=io.txt out.fst &gt;out.dot</span><br><span class="line">$ dot -Tps out.dot&gt;out.ps</span><br></pre></td></tr></table></figure>
+<p>—&gt;</p>
+-->
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/WFST/">WFST</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/21/winter-comes/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">冬天来了</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/19/wfst-2/">
+        <span class="next-text nav-default">WFST详解#2</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2017/11/21/wfst-3/';
+
+  var disqus_title = "WFST详解#3";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="WFST详解#目录"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,WFST," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2017/12/10/wfst-catalogue/"/>
+
+
+<meta name="description" content="深入学习语音识别解码器，理解WFST是绕不开的。为了方便自己以后复习，我写了一个小系列的文章。如果凑巧能够帮助到您，我会非常高兴！不管你是从哪里找到这里的，欢迎光临～ 文章目录如下：  Semiring入门 WFST基本算法 Composition算法 Determinization算法 Epsilon-Removal算法 Weight-Pushing算法 Minimization算法  番外：">
+<meta name="keywords" content="语音识别,WFST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WFST详解#目录">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2017/12/10/wfst-catalogue/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="深入学习语音识别解码器，理解WFST是绕不开的。为了方便自己以后复习，我写了一个小系列的文章。如果凑巧能够帮助到您，我会非常高兴！不管你是从哪里找到这里的，欢迎光临～ 文章目录如下：  Semiring入门 WFST基本算法 Composition算法 Determinization算法 Epsilon-Removal算法 Weight-Pushing算法 Minimization算法  番外：">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WFST详解#目录">
+<meta name="twitter:description" content="深入学习语音识别解码器，理解WFST是绕不开的。为了方便自己以后复习，我写了一个小系列的文章。如果凑巧能够帮助到您，我会非常高兴！不管你是从哪里找到这里的，欢迎光临～ 文章目录如下：  Semiring入门 WFST基本算法 Composition算法 Determinization算法 Epsilon-Removal算法 Weight-Pushing算法 Minimization算法  番外：">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> WFST详解#目录 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          WFST详解#目录
+        
+      </h1>
+
+      <time class="post-time">
+          Dec 10 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>深入学习语音识别解码器，理解WFST是绕不开的。为了方便自己以后复习，我写了一个小系列的文章。如果凑巧能够帮助到您，我会非常高兴！不管你是从哪里找到这里的，欢迎光临～</p>
+<p>文章目录如下：</p>
+<ul>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/19/wfst-1/">Semiring入门</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/">WFST基本算法</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/21/wfst-3/">Composition算法</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/24/wfst-4/">Determinization算法</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/26/wfst-5/">Epsilon-Removal算法</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/26/wfst-6/">Weight-Pushing算法</a></li>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/27/wfst-7/">Minimization算法</a></li>
+</ul>
+<p>番外：</p>
+<ul>
+<li><a href="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/">语音识别解码器简介</a></li>
+</ul>
+<p>非常好的参考文献：</p>
+<ul>
+<li><a href="http://www.doc88.com/p-7468656439802.html" target="_blank" rel="noopener">Speech Recognition Algorithms Using Weighted Finite-State Transducers</a></li>
+<li><a href="https://cs.nyu.edu/~mohri/pub/hbka.pdf" target="_blank" rel="noopener">Speech Recognition With Weighted Finite-State Transducers</a></li>
+<li><a href="http://openfst.cs.nyu.edu/twiki/pub/FST/FstHltTutorial/tutorial_part1.pdf" target="_blank" rel="noopener">Openfst Tutorials</a></li>
+<li><a href="http://blog.csdn.net/l_b_yuan/article/details/50876340" target="_blank" rel="noopener">走进语音识别的WFST系列博客</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/WFST/">WFST</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/12/21/kws-intro/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">语音关键词检索简介</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/30/156-times/">
+        <span class="next-text nav-default">156次</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2017/12/10/wfst-catalogue/';
+
+  var disqus_title = "WFST详解#目录";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

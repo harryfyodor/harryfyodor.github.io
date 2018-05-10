@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="语音识别解码器简单简介"/>
+
+
+
+
+  <meta name="keywords" content="语音识别," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/"/>
+
+
+<meta name="description" content="本篇文章介绍语音识别的解码器部分。解码器的作用是得到输入的语音的最优结果，即文本。当前最流行的方法是使用WFST的解决方案。 WFSTWFST定义的是一种有向图。图的边有输入label，输出label，权重。它有最初的输入状态，有最终的结束状态。 深入理解什么是WFST是认识语音识别解码器的关键。下面一组视频专门讲解WFST的相关概念和算法的视频。通过这个视频，你可以非常清晰完整地认识有关WFST">
+<meta name="keywords" content="语音识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语音识别解码器简单简介">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="本篇文章介绍语音识别的解码器部分。解码器的作用是得到输入的语音的最优结果，即文本。当前最流行的方法是使用WFST的解决方案。 WFSTWFST定义的是一种有向图。图的边有输入label，输出label，权重。它有最初的输入状态，有最终的结束状态。 深入理解什么是WFST是认识语音识别解码器的关键。下面一组视频专门讲解WFST的相关概念和算法的视频。通过这个视频，你可以非常清晰完整地认识有关WFST">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/ngram.jpeg">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/lexicon.jpeg">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/cd.jpeg">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/hmm.jpeg">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="语音识别解码器简单简介">
+<meta name="twitter:description" content="本篇文章介绍语音识别的解码器部分。解码器的作用是得到输入的语音的最优结果，即文本。当前最流行的方法是使用WFST的解决方案。 WFSTWFST定义的是一种有向图。图的边有输入label，输出label，权重。它有最初的输入状态，有最终的结束状态。 深入理解什么是WFST是认识语音识别解码器的关键。下面一组视频专门讲解WFST的相关概念和算法的视频。通过这个视频，你可以非常清晰完整地认识有关WFST">
+<meta name="twitter:image" content="https://pages.harryfyodor.xyz/2017/11/13/decoder-intro/ngram.jpeg">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 语音识别解码器简单简介 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          语音识别解码器简单简介
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 13 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>本篇文章介绍语音识别的解码器部分。解码器的作用是得到输入的语音的最优结果，即文本。当前最流行的方法是使用WFST的解决方案。</p>
+<h3 id="WFST"><a href="#WFST" class="headerlink" title="WFST"></a>WFST</h3><p>WFST定义的是一种有向图。图的边有输入label，输出label，权重。它有最初的输入状态，有最终的结束状态。</p>
+<p>深入理解什么是WFST是认识语音识别解码器的关键。下面一组视频专门讲解WFST的相关概念和算法的<a href="https://www.youtube.com/playlist?list=PLxbPHSSMPBeicXAHVfyFvGfCywRCq39Mp" target="_blank" rel="noopener">视频</a>。通过这个视频，你可以非常清晰完整地认识有关WFST的内容。</p>
+<p>重点认识两个方面的内容。</p>
+<ul>
+<li>概念：半环的概念，FSA，FST，WFST，WFSA的概念。</li>
+<li>算法：Composition，Determinization，Minimisation。</li>
+</ul>
+<p>如果想要更加深入了解WFST的相关内容，Moris的经典论文<a href="http://www.cs.nyu.edu/~mohri/pub/hbka.pdf" target="_blank" rel="noopener">《Speech Recognition with Weighted Finite-state Transducer》</a>是必读的。</p>
+<h3 id="三大操作"><a href="#三大操作" class="headerlink" title="三大操作"></a>三大操作</h3><p>WFST在语音识别解码器中有三个重要的操作，这三个操作在构建解码器的时候发挥着各自的作用。</p>
+<ul>
+<li>Composition：把两个WFST合成。假设有一个WFST，称为A，另一个，称为B。A的输出值是B的输入值，那么合成就是把中间部分”合并“掉，生成一个WFST。这个WFST让A的输入转化成B的输出。</li>
+<li>Determinization: 同一个状态输出的转化中，一个输入label只能有一个输出label。</li>
+<li>Minimisation: 简化当前的WFST，去除冗余的转化。这个操作之后的WFST与之前的保持等价。</li>
+</ul>
+<h3 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h3><p>WFST在解码器中的运用就是HCLG。这是Kaldi的实现方案。这个方案把HMM结构，上下文相关的音素，词音素和语法结合起来。这样，把输入的语音帧直接映射为语句，把每一个环节的影响加入了模型当中。</p>
+<p>HCLG的合成公式如下：</p>
+<script type="math/tex; mode=display">HCLG=min(det(H \circ min(det(C \circ min(det(L \circ G))))))</script><p>理解这一条公式需要先了解其中每一个WFST是什么样子的。</p>
+<p>G：使用n-gram把词汇通过概率组合起来的一个FSA。</p>
+<p><img src="ngram.jpeg" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>L：lexicon的一个FST。如果有同音词，就通过在词的lexicon后面#1，#2来消歧义。这个FST将音素映射到词汇上。</p>
+<p><img src="lexicon.jpeg" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>C：把有上下文的triphone模型映射到monophone模型，即音素上面。</p>
+<p><img src="cd.jpeg" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>H：把HMM的状态映射到上下文相关triphone模型上去。</p>
+<p><img src="hmm.jpeg" style="margin-left:50%;transform: translateX(-50%);"></p>
+<p>通过上面的公式，就成功把一个输入的triphone模型映射到句子上。如果有连续的一个语音串，就可以生成相关的句子。</p>
+<h3 id="如何解码"><a href="#如何解码" class="headerlink" title="如何解码"></a>如何解码</h3><p>有了这个HCLG，如何解码？</p>
+<p>首先，假设输入的语音有T帧，我们将之构建成T+1的状态的WFSA。边上的信息是上下文相关的HMM模型和相关的log likelihood。把这一个WFSA和已经有的HCLG进行合并得到一个图。这个图叫做搜索图。而解码的过程就相当于在这个搜索图里面寻找最优路径。可以使用维特比算法加上剪枝来寻找最优路径。</p>
+<p>（下面一段话参杂了自己的理解，可能不是很准确。）</p>
+<p>而在Kaldi的实现中，合成的搜索图的边信息需要包括图损耗(graph cost)和语音损耗(acoustic cost)。实际操作中，对每一个HCLG的边，计算每一帧的语音损耗。每过25帧进行一次剪枝。最后得到一个lattice，记为P。把P输入输出翻转，得到Q。翻转的目的是为了对每个词序列里的词都保留最佳的路线（此时的Q输入是单词，输出是一个一个概率分布），保留最好的分割方案。然后再编码为E。最后进过一些优化，就可以得到最后的L。L的每一条路径都是当前语音输入的可能结果。</p>
+<p>对于该过程不清晰可以查阅这一篇论文：《Generating exact lattices in the WFST framework》。</p>
+<p>文章如果有什么错误的地方，欢迎指正，非常感谢。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/13/thinking-about-tech-blog/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">对技术博客的相关思考</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/05/gmm-hmm-model/">
+        <span class="next-text nav-default">GMM-HMM模型（理论篇）</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2017/11/13/decoder-intro/';
+
+  var disqus_title = "语音识别解码器简单简介";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

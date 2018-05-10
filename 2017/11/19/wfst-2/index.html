@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="WFST详解#2"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,WFST," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/"/>
+
+
+<meta name="description" content="本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  本篇文章主要讲解WFST的基本操作。这些操作比较简单，因此放在一起讲解。 1 基本操作下面的基本操作是需要熟悉的，难度不大，但在很多地方都需要用到。在网上有一个很好的slides可以作为学习的参考。它有很多例子，可以直观地了解每一个算法运行的结果怎么样。这里的算法比较简单，看一下公式和图例基本就能了解清楚。在">
+<meta name="keywords" content="语音识别,WFST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WFST详解#2">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  本篇文章主要讲解WFST的基本操作。这些操作比较简单，因此放在一起讲解。 1 基本操作下面的基本操作是需要熟悉的，难度不大，但在很多地方都需要用到。在网上有一个很好的slides可以作为学习的参考。它有很多例子，可以直观地了解每一个算法运行的结果怎么样。这里的算法比较简单，看一下公式和图例基本就能了解清楚。在">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/closure.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/union.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/concatenation.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/inversion.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/reversal.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/projection.png">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.810Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WFST详解#2">
+<meta name="twitter:description" content="本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的目录，欢迎您的到来～  本篇文章主要讲解WFST的基本操作。这些操作比较简单，因此放在一起讲解。 1 基本操作下面的基本操作是需要熟悉的，难度不大，但在很多地方都需要用到。在网上有一个很好的slides可以作为学习的参考。它有很多例子，可以直观地了解每一个算法运行的结果怎么样。这里的算法比较简单，看一下公式和图例基本就能了解清楚。在">
+<meta name="twitter:image" content="https://pages.harryfyodor.xyz/2017/11/19/wfst-2/closure.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> WFST详解#2 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          WFST详解#2
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 19 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>本文是WFST系列文章的其中一篇，想要了解更多可以点击这个系列的<a href="https://pages.harryfyodor.xyz/2017/12/10/wfst-catalogue/">目录</a>，欢迎您的到来～</p>
+</blockquote>
+<p>本篇文章主要讲解WFST的基本操作。这些操作比较简单，因此放在一起讲解。</p>
+<h3 id="1-基本操作"><a href="#1-基本操作" class="headerlink" title="1 基本操作"></a>1 基本操作</h3><p>下面的基本操作是需要熟悉的，难度不大，但在很多地方都需要用到。在网上有一个很好的slides可以作为学习的参考。它有很多例子，可以直观地了解每一个算法运行的结果怎么样。这里的算法比较简单，看一下公式和图例基本就能了解清楚。在这篇短文中，我会直接配合slides的截图介绍每一个算法。</p>
+<p>slides的地址在这里：<a href="http://openfst.cs.nyu.edu/twiki/pub/FST/FstHltTutorial/tutorial_part1.pdf" target="_blank" rel="noopener">http://openfst.cs.nyu.edu/twiki/pub/FST/FstHltTutorial/tutorial_part1.pdf</a></p>
+<h4 id="1-1-Kleene-closure"><a href="#1-1-Kleene-closure" class="headerlink" title="1.1 Kleene closure"></a>1.1 Kleene closure</h4><p>这个算法的作用是将WFST变成一个闭环。具体做法是新建一个起点的状态，指向原本的起点状态。这里我们就新建了一个转移。这里之后，我们再新建一个转移，从终止状态指向原本的起始状态。我们还要进行一下权重的调整：新的初始状态不再带权重，而将权重放到新的转移（指向原本的起点状态）上；从终止状态指向原本起点的转移上，我们将权重设置为终止状态的权重。</p>
+<p><img src="closure.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="1-2-Union"><a href="#1-2-Union" class="headerlink" title="1.2 Union"></a>1.2 Union</h4><p>这一个算法将两个WFST联合起来。联合的方式如下：创建一个新的节点作为起点，然后从这个起点出发，创建两个转移，指向原本的两个WFST的起点。</p>
+<p><img src="union.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="1-3-Concatentation"><a href="#1-3-Concatentation" class="headerlink" title="1.3 Concatentation"></a>1.3 Concatentation</h4><p>Concatentation算法的作用是将一个WFST接在另一个WFST的末尾。第一个WFST的终止权重自然而然转换成了新转移的权重。</p>
+<p><img src="concatenation.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="1-4-Inversion"><a href="#1-4-Inversion" class="headerlink" title="1.4 Inversion"></a>1.4 Inversion</h4><p>翻转操作非常重要，在语音识别解码器构建以及解码中都会用到。操作很简单，就是把转移上面的输入和输出翻转过来。操作之后，就能通过原本的输出输入，通过原本的输入输出。一个大写字母变成小写字母的WFST就会被转换成小写到大写的WFST。</p>
+<p><img src="inversion.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="1-5-Reversal"><a href="#1-5-Reversal" class="headerlink" title="1.5 Reversal"></a>1.5 Reversal</h4><p>这个算法将整一个WFST逆转过来。我们新建一个新的起点，指向终止状态。整一个WFST的转移方向都要反过来。</p>
+<p><img src="reversal.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="1-6-Projection"><a href="#1-6-Projection" class="headerlink" title="1.6 Projection"></a>1.6 Projection</h4><p>这一个步骤，我们将WFST的输出都抛弃掉。我们的WFST这里就变成了WFA。</p>
+<p><img src="projection.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h3 id="2-其他重要算法"><a href="#2-其他重要算法" class="headerlink" title="2 其他重要算法"></a>2 其他重要算法</h3><p>有关WFST还有一些非常重要的算法，这些算法可以大致分为两类：合成(Composition)和优化(Optimization)。优化算法又包括：Determinization，Epsilon-Removal，Weight-pushing， Minimization。这些算法相对复杂，针对每一个算法我会写一篇简单的文章。可以参考。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/WFST/">WFST</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/21/wfst-3/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">WFST详解#3</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/19/wfst-1/">
+        <span class="next-text nav-default">WFST详解#1</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2017/11/19/wfst-2/';
+
+  var disqus_title = "WFST详解#2";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

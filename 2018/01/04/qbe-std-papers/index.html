@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="关键词检索QbE-STD论文笔记"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,关键词检索," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2018/01/04/qbe-std-papers/"/>
+
+
+<meta name="description" content="常用QbE-STD有以下的几个步骤：  训练phone decoder 统计测试数据每一帧属于每一个phone分布的概率，生成Posteriorgramphone posteriorgramsGaussian posteriorgrams如果资源不丰富，可以使用其他语言来训练 使用DTW，计算距离non-segmental DTW  before 2015USE OF ARTICULATORY B">
+<meta name="keywords" content="语音识别,关键词检索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关键词检索QbE-STD论文笔记">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2018/01/04/qbe-std-papers/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="常用QbE-STD有以下的几个步骤：  训练phone decoder 统计测试数据每一帧属于每一个phone分布的概率，生成Posteriorgramphone posteriorgramsGaussian posteriorgrams如果资源不丰富，可以使用其他语言来训练 使用DTW，计算距离non-segmental DTW  before 2015USE OF ARTICULATORY B">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关键词检索QbE-STD论文笔记">
+<meta name="twitter:description" content="常用QbE-STD有以下的几个步骤：  训练phone decoder 统计测试数据每一帧属于每一个phone分布的概率，生成Posteriorgramphone posteriorgramsGaussian posteriorgrams如果资源不丰富，可以使用其他语言来训练 使用DTW，计算距离non-segmental DTW  before 2015USE OF ARTICULATORY B">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 关键词检索QbE-STD论文笔记 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          关键词检索QbE-STD论文笔记
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 04 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>常用QbE-STD有以下的几个步骤：</p>
+<ul>
+<li>训练phone decoder</li>
+<li>统计测试数据每一帧属于每一个phone分布的概率，生成Posteriorgram<br>phone posteriorgrams<br>Gaussian posteriorgrams<br>如果资源不丰富，可以使用其他语言来训练</li>
+<li>使用DTW，计算距离<br>non-segmental DTW</li>
+</ul>
+<h3 id="before-2015"><a href="#before-2015" class="headerlink" title="before 2015"></a>before 2015</h3><h4 id="USE-OF-ARTICULATORY-BOTTLE-NECK-FEATURES-FOR-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION-IN-LOW-RESOURCE-SCENARIOS"><a href="#USE-OF-ARTICULATORY-BOTTLE-NECK-FEATURES-FOR-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION-IN-LOW-RESOURCE-SCENARIOS" class="headerlink" title="USE OF ARTICULATORY BOTTLE-NECK FEATURES FOR QUERY-BY-EXAMPLE SPOKEN TERM DETECTION IN LOW RESOURCE SCENARIOS"></a>USE OF ARTICULATORY BOTTLE-NECK FEATURES FOR QUERY-BY-EXAMPLE SPOKEN TERM DETECTION IN LOW RESOURCE SCENARIOS</h4><p>使用articulatory BN features的高斯Posteriorgrams，对比phone BN features有更好的效果。BN features在多语言LVCSR中有很好的效果。Articulatory Speech Recognition在识别带噪声的语音时有更好的效果。<br>新加了一些分支，训练多层分支感知器。得到一些AR特征。<br>使用了non-segmental DTW。<br>对比了AR-CP，AR-BN，FDLP，FDLP + AR-CP/BN，其中 FDLP + AR-BN 效果最好。<br>对比了FDLP + AR-BN/PH-BN，其中 FDLP + AR-BN 效果最好。<br>用网络训练多层感知器，来确定分支特征（23）。用分支特征训练BN特征（13），加上FDLP（39）。</p>
+<p>年份：2014<br>Database：MediaEval 2012 data, subset of Lwazi database<br>Toolkits：没有提及。<br>效果：ATWV 0.492<br>启发: 可以从训练特征入手，如果能做出更好的phone decoder就能得出更好的效果。可以结合不同的特征。特征可以用神经网络提取。</p>
+<h4 id="Unsupervised-Spoken-Term-Detection-with-Spoken-Queries-Using-Segment-based-Dynamic-Time-Warping"><a href="#Unsupervised-Spoken-Term-Detection-with-Spoken-Queries-Using-Segment-based-Dynamic-Time-Warping" class="headerlink" title="Unsupervised Spoken-Term Detection with Spoken Queries Using Segment-based Dynamic Time Warping"></a>Unsupervised Spoken-Term Detection with Spoken Queries Using Segment-based Dynamic Time Warping</h4><p>关注于检索项也是语音的情况，即无监督检索。<br>不使用frame-based feature vectors，使用自己分片段的DTW。使用segment-based DTW。<br>自己分segment的方法是聚类，最小化loss。Hierarchical agglomerative clustering。<br>Segment-based DTW的时候，小的分段会形成一个更高层的分段（超分段），然后超分段自行匹配。</p>
+<p>年份：2010<br>Database：Mandarin broadcast news 自己的特征<br>Toolkits: 没有提及<br>效果：MAP 31.9% CPU time reduced 65.4%<br>启发：花样聚类，减少运算。基于DTW的改进方法。</p>
+<h4 id="Unsupervised-Query-by-Example-Spoken-Term-Detection-using-Bag-of-Acoustic-Words-and-Non-Segmental-Dynamic-Time-Warping"><a href="#Unsupervised-Query-by-Example-Spoken-Term-Detection-using-Bag-of-Acoustic-Words-and-Non-Segmental-Dynamic-Time-Warping" class="headerlink" title="Unsupervised Query-by-Example Spoken Term Detection using Bag of Acoustic Words and Non-Segmental Dynamic Time Warping"></a>Unsupervised Query-by-Example Spoken Term Detection using Bag of Acoustic Words and Non-Segmental Dynamic Time Warping</h4><p>使用Bag of Acoustic Words (BoAW) index，使用NS-DTW。<br>在传统系统上增加上索引。<br>Robust indexing and retrieval techniques, along with a very efficient Non-Segmental DTW algorithm。<br>BoW在文字检索中常用。<br>N-gram indexing and Retrieval</p>
+<p>年份：2014<br>Database：MediaEval 2012 data<br>Toolkits: 没有提及<br>效果：MTWV 0.3755<br>启发：可以借鉴文本检索的方法。对这方面了解比较少，还需要再去看。</p>
+<h4 id="Spoken-Term-Detection-with-Robust-Multilingual-Phone-Recognition"><a href="#Spoken-Term-Detection-with-Robust-Multilingual-Phone-Recognition" class="headerlink" title="Spoken Term Detection with Robust Multilingual Phone Recognition"></a>Spoken Term Detection with Robust Multilingual Phone Recognition</h4><p>使用PNCC特征。这种特征的抗噪性更好。<br>多语言的phone decoder。<br>对比了PNCC和MFCC。<br>使用了DTW。</p>
+<p>年份：2014<br>Database：MediaEval 2014 data<br>效果：使用了normalized cross entropy cost，不好比较<br>启发：总结特征。文章很短。</p>
+<h4 id="Query-by-Example-Spoken-Term-Detection-using-Frequency-Domain-Linear-Prediction-and-Non-Segmental-Dynamic-Time-Warping"><a href="#Query-by-Example-Spoken-Term-Detection-using-Frequency-Domain-Linear-Prediction-and-Non-Segmental-Dynamic-Time-Warping" class="headerlink" title="Query-by-Example Spoken Term Detection using Frequency Domain Linear Prediction and Non-Segmental Dynamic Time Warping"></a>Query-by-Example Spoken Term Detection using Frequency Domain Linear Prediction and Non-Segmental Dynamic Time Warping</h4><p>使用了FDLP特征训练模型，得到Gaussian posteriorgrams。<br>使用了FNS-DTW，去除了冗余信息，速度更快，有性能损失。<br>较为详细地介绍了各种特征的提取。LPCC, MFCC, PLP, FDLP。<br>介绍了GMM的简单训练过程，介绍了NS-DTW，对比了S-DTW。</p>
+<p>年份：2012<br>Database：MediaEval 2012<br>效果：MTWV 0.399 dev<br>启发：这篇文章写得比较细致全面，介绍了各种DTW和特征，后面可以参考。使用的方法比较传统，唯一有亮点的就是FNS-DTW。</p>
+<p>需要实现的时候可以过来看这一篇文章。</p>
+<h4 id="Sparse-Modeling-of-Posterior-Exemplars-for-Keyword-Detection"><a href="#Sparse-Modeling-of-Posterior-Exemplars-for-Keyword-Detection" class="headerlink" title="Sparse Modeling of Posterior Exemplars for Keyword Detection"></a>Sparse Modeling of Posterior Exemplars for Keyword Detection</h4><p>Sparse representation。<br>采用一种新的模板匹配方式。把关键词检索问题看成是测试样例子空间的分类问题。分类为背景和关键词。<br>进行dictionary learning。</p>
+<p>年份：2015<br>Database：Numbers’95<br>启发：没有完全看明白，类似一种维度下降的方法。场景可能比较局限。可以学习一下Sparse representation。</p>
+<h4 id="PHONETIC-UNIT-SELECTION-FOR-CROSS-LINGUAL-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION"><a href="#PHONETIC-UNIT-SELECTION-FOR-CROSS-LINGUAL-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION" class="headerlink" title="PHONETIC UNIT SELECTION FOR CROSS-LINGUAL QUERY-BY-EXAMPLE SPOKEN TERM DETECTION"></a>PHONETIC UNIT SELECTION FOR CROSS-LINGUAL QUERY-BY-EXAMPLE SPOKEN TERM DETECTION</h4><p>关注多语言的关键词，phone unit是否和目标语言匹配。<br>使用了subsequence DTW。距离相关度公式。cost的计算。<br>定义一个Relevance量：这一个量计算每一个音素单位的相关度，通过他们对cost的贡献程度来算。然后抛弃那些相关度最小的音素。<br>选择一个相关phone unit的方法。</p>
+<p>年份：2015<br>Database：Albayzin 2014<br>工具：各种phone decoder<br>启发：1. 距离上可以搞一点小文章。很多文章都是这么做的。2. 在Posteriorgram上搞。</p>
+<h4 id="MEMORY-EFFICIENT-SUBSEQUENCE-DTW-FOR-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION"><a href="#MEMORY-EFFICIENT-SUBSEQUENCE-DTW-FOR-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION" class="headerlink" title="MEMORY EFFICIENT SUBSEQUENCE DTW FOR QUERY-BY-EXAMPLE SPOKEN TERM DETECTION"></a>MEMORY EFFICIENT SUBSEQUENCE DTW FOR QUERY-BY-EXAMPLE SPOKEN TERM DETECTION</h4><p>改进Subsequence DTW。更快，更小。<br>S-DTW在音乐上常用。提出Memory Efficient S-DTW。<br>S-DTW：固定起点，增长，看cost最小值。<br>两点改进：</p>
+<ol>
+<li>trackback更方便</li>
+<li>归一化<br>附带伪代码，可以参考</li>
+</ol>
+<p>年份：2013年<br>Database：Mediaeval 2012 SWS<br>效果：0.235MTWV增长，速度25%增长<br>启发：在DTW传统的方法本身想一些改进的地方。音乐上面的DTW可能可以找点参考。</p>
+<h4 id="Intrinsic-Spectral-Analysis-Based-on-Temporal-Context-Features-for-Query-by-Example-Spoken-Term-Detection"><a href="#Intrinsic-Spectral-Analysis-Based-on-Temporal-Context-Features-for-Query-by-Example-Spoken-Term-Detection" class="headerlink" title="Intrinsic Spectral Analysis Based on Temporal Context Features for Query-by-Example Spoken Term Detection"></a>Intrinsic Spectral Analysis Based on Temporal Context Features for Query-by-Example Spoken Term Detection</h4><p>intrinsic spectral analysis (ISA) features 替代 Gaussian posteriorgrams<br>Laplacian eigenmaps / use temporal context information<br>非监督学习的方法</p>
+<p>（不是非常懂）</p>
+<p>年份：2014年<br>Database：TIMIT<br>效果：高于baseline 13.5%<br>启发：想着怎么用新的方法搞特征。比如autoencoder。</p>
+<h4 id="DOUBLE-LAYER-NEIGHBORHOOD-GRAPH-BASED-SIMILARITY-SEARCH-FOR-FAST-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION"><a href="#DOUBLE-LAYER-NEIGHBORHOOD-GRAPH-BASED-SIMILARITY-SEARCH-FOR-FAST-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION" class="headerlink" title="DOUBLE-LAYER NEIGHBORHOOD GRAPH BASED SIMILARITY SEARCH FOR FAST QUERY-BY-EXAMPLE SPOKEN TERM DETECTION"></a>DOUBLE-LAYER NEIGHBORHOOD GRAPH BASED SIMILARITY SEARCH FOR FAST QUERY-BY-EXAMPLE SPOKEN TERM DETECTION</h4><p>graph-based similarity search method<br>双层图，下层图用聚类。点是Posteriorgram，线是DTW相似度<br>kNN的方法，找出当前点距离最近的集合<br>对比了 Ordinary GSS 和 DLG based GSS。双层，更快。<br>图上用BFS寻找路径。</p>
+<p>年份：2015年<br>Database：MIT lecture corpus<br>效果：快<br>启发：很新奇…转换成图的计算方法</p>
+<h4 id="Distinctive-Feature-Based-Representation-of-Speech-for-Query-by-Example-Spoken-Term-Detection"><a href="#Distinctive-Feature-Based-Representation-of-Speech-for-Query-by-Example-Spoken-Term-Detection" class="headerlink" title="Distinctive Feature Based Representation of Speech for Query-by-Example Spoken Term Detection"></a>Distinctive Feature Based Representation of Speech for Query-by-Example Spoken Term Detection</h4><p>和之前的多层感知器有点相似，变成多分类问题。<br>binary distinctive features 替代原本的 Posteriorgram<br>Segmental DTW<br>双层SVM二分类，至少可以分成四类，然后就可以走一个分支<br>最终都是通过一定手段获得Posteriorgram（不是很懂这里计算概率的方法）<br>间接的方法</p>
+<p>年份：2015年<br>Database：TIMIT<br>效果：EER 5.32<br>启发：多层感知器可以，那么多层SVM可以吗？多层LR可以吗？如果真的是多分类，用神经网络可以吗(考虑长度不一致)?</p>
+<h4 id="AN-ACOUSTIC-SEGMENT-MODELING-APPROACH-TO-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION"><a href="#AN-ACOUSTIC-SEGMENT-MODELING-APPROACH-TO-QUERY-BY-EXAMPLE-SPOKEN-TERM-DETECTION" class="headerlink" title="AN ACOUSTIC SEGMENT MODELING APPROACH TO QUERY-BY-EXAMPLE SPOKEN TERM DETECTION"></a>AN ACOUSTIC SEGMENT MODELING APPROACH TO QUERY-BY-EXAMPLE SPOKEN TERM DETECTION</h4><p>无监督聚类的方法 ASM<br>ASM + HMM 代替 Gaussian Posteriorgram<br>步骤：</p>
+<ol>
+<li>初始化划分</li>
+<li>聚类，打标签</li>
+<li>HMM训练，不停自己decode</li>
+</ol>
+<p>年份：2012<br>Database：Fisher Corpus<br>工具：BUT-style [15] English (EN) phoneme recognizer，he Hungarian phoneme recognizer<br>启发：可以考虑怎样改进当前的Posteriorgram</p>
+<h3 id="interspeech"><a href="#interspeech" class="headerlink" title="interspeech"></a>interspeech</h3><h3 id="icassp"><a href="#icassp" class="headerlink" title="icassp"></a>icassp</h3>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/关键词检索/">关键词检索</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/31/last-day-of-january/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">2018年的第一篇博客</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/12/21/kws-intro/">
+        <span class="next-text nav-default">语音关键词检索简介</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2018/01/04/qbe-std-papers/';
+
+  var disqus_title = "关键词检索QbE-STD论文笔记";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

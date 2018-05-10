@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="语音关键词检索简介"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,关键词检索," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2017/12/21/kws-intro/"/>
+
+
+<meta name="description" content="1 什么是关键词检索语音关键词检索是什么？英文的表述有Keyword Spotting，Spoken Term Detection，Keyword Search。它的含义是，从一个语料库中寻找到我需要的词的位置的方法。方法可以给一个词（以文字的形式），或者给一个语音片断，然后系统找出在哪一个语料的哪一个时间段出现过这句话。 当前这个领域面临的一些挑战主要是：对于检索速率和准确度，如何去提升；针对语">
+<meta name="keywords" content="语音识别,关键词检索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语音关键词检索简介">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2017/12/21/kws-intro/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="1 什么是关键词检索语音关键词检索是什么？英文的表述有Keyword Spotting，Spoken Term Detection，Keyword Search。它的含义是，从一个语料库中寻找到我需要的词的位置的方法。方法可以给一个词（以文字的形式），或者给一个语音片断，然后系统找出在哪一个语料的哪一个时间段出现过这句话。 当前这个领域面临的一些挑战主要是：对于检索速率和准确度，如何去提升；针对语">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/12/21/kws-intro/cn.png">
+<meta property="og:image" content="https://pages.harryfyodor.xyz/2017/12/21/kws-intro/oov.png">
+<meta property="og:updated_time" content="2018-05-10T09:27:19.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="语音关键词检索简介">
+<meta name="twitter:description" content="1 什么是关键词检索语音关键词检索是什么？英文的表述有Keyword Spotting，Spoken Term Detection，Keyword Search。它的含义是，从一个语料库中寻找到我需要的词的位置的方法。方法可以给一个词（以文字的形式），或者给一个语音片断，然后系统找出在哪一个语料的哪一个时间段出现过这句话。 当前这个领域面临的一些挑战主要是：对于检索速率和准确度，如何去提升；针对语">
+<meta name="twitter:image" content="https://pages.harryfyodor.xyz/2017/12/21/kws-intro/cn.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 语音关键词检索简介 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          语音关键词检索简介
+        
+      </h1>
+
+      <time class="post-time">
+          Dec 21 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h3 id="1-什么是关键词检索"><a href="#1-什么是关键词检索" class="headerlink" title="1 什么是关键词检索"></a>1 什么是关键词检索</h3><p>语音关键词检索是什么？英文的表述有Keyword Spotting，Spoken Term Detection，Keyword Search。它的含义是，从一个语料库中寻找到我需要的词的位置的方法。方法可以给一个词（以文字的形式），或者给一个语音片断，然后系统找出在哪一个语料的哪一个时间段出现过这句话。</p>
+<p>当前这个领域面临的一些挑战主要是：对于检索速率和准确度，如何去提升；针对语音变形，比如说有口音，有背景噪声的情况下，如何处理；当语料资源不足的时候，要怎么去构建系统。针对这些挑战，领域内也有很多相应的解决方法。</p>
+<p>当系统构建完成之后，要通过一定的指标来确定这个系统是否可行。常见的指标有准确率，召回率，漏报率，虚警率，这些指标和机器学习领域如出一辙。当漏报率和虚警率一致的时候，就是这个系统工作得最好的时候。</p>
+<h3 id="2-各种方法与原理"><a href="#2-各种方法与原理" class="headerlink" title="2 各种方法与原理"></a>2 各种方法与原理</h3><h4 id="2-1-早期的方法"><a href="#2-1-早期的方法" class="headerlink" title="2.1 早期的方法"></a>2.1 早期的方法</h4><p>最早的时候，关键词检索是基于DTW算法构建的。这里需要对所有的非关键词进行建模：一个由关键词模型和一个补白模型（垃圾模型）构成的并行系统。关键词通过关键词模型有一个得分，通过补白模型有一个得分。训练的目的就是使得前者的得分变高，后者的得分尽量低。这个系统有一个显而易见的缺点：对于每一个关键词都需要建立模型，不适合移植。而且关键词表比较大的时候，系统的性能会大幅度下降。针对少量关键词的场景，这个方法的想法还是值得借鉴的，但当我们需要在大规模语音识别系统进行检索的任务的时候，更常用的方法是下面，基于LVCSR的检索方式。</p>
+<h4 id="2-2-基于LVCSR系统"><a href="#2-2-基于LVCSR系统" class="headerlink" title="2.2 基于LVCSR系统"></a>2.2 基于LVCSR系统</h4><p>LVCSR系统，即大规模词表连续语音识别，可以将连续的语音转换成相应的文字。系统在识别语音的时候会生成lattice，然后在lattice中寻找最优路径，这个最优路径就是语音识别的结果。但是，这个识别出来的结果只是一个1-best的结果，而有时候，关键词可能就潜藏在其他可能的路径上。为了把这些潜藏的结果也找出来，我们就要在lattice上进行检索。这个也是当前大规模识别寻找关键词的主流方法。</p>
+<p>系统生成的lattice可能非常冗杂，这里可以考虑使用混淆矩阵，将lattice变得更加紧凑。下面的图就展示了如何将原本的lattice转换成混淆网络。</p>
+<p><img src="cn.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="2-3-基于subword系统"><a href="#2-3-基于subword系统" class="headerlink" title="2.3 基于subword系统"></a>2.3 基于subword系统</h4><p>语音识别的lattice是一般是基于词的，这有一个弊端，就是无法解决OOV的问题。我们需要检索字典不存在的词的时候，之前的系统就无法正常检索了。这里，我们可以将词进行切分，切成更小的音素，音节等等。之后，便可以在基于这些子词的lattice上进行检索。</p>
+<h4 id="2-4-基于WFST系统"><a href="#2-4-基于WFST系统" class="headerlink" title="2.4 基于WFST系统"></a>2.4 基于WFST系统</h4><p>如何在lattice上进行有效率的检索，这是一个很好的问题。使用顺序检索明显是很低效率的方法。我们可以将问题转换得更抽象一点：关键词检索是序列中寻找词的过程。序列到结果的问题，可以考虑引入WFST。我们可以构建一个索引，将结果的后验概率值，词的时间起点，词的时间终点，三个信息放在权重上。这个转移上的符号，被称之为时间因子。引入WFST进行索引构建，主要的工作便是这个因子的构成。最后，将要检索的关键词合并到索引当中然后进行优化，排序，就能够找到关键词的相应位置和权重值。</p>
+<p>关于这个WFST的构建，可以参考这一篇论文：Lattice Indexing for Spoken Term Detection。</p>
+<h4 id="2-5-基于WFST的OOV检索"><a href="#2-5-基于WFST的OOV检索" class="headerlink" title="2.5 基于WFST的OOV检索"></a>2.5 基于WFST的OOV检索</h4><p>OOV的检索和普通词的检索差别在对于关键词的处理上。我们无法直接将OOV直接合并到索引中进行检索，这时候，需要用另一种方式进行词的自动机构建。我们可以通过下面的方法进行关键词自动机的构建：构建音素混淆矩阵，利用G2P模型构建OOV的lexicon，然后再加上原本的lexicon，结果全部合并起来。这样做可以得到一个从OOV到可能的lexicon的映射。这也就相当于，有了这个词的发音，系统可以找到其他发音相近的词。合并的公式如下所示：</p>
+<p><img src="oov.png" style="margin-left:50%;transform: translateX(-50%);"></p>
+<h4 id="2-6-传统的方法的分支"><a href="#2-6-传统的方法的分支" class="headerlink" title="2.6 传统的方法的分支"></a>2.6 传统的方法的分支</h4><p>上面的方法主要针对的是大规模关键词检索的任务，或者说，已经有文本（text）的任务。但是有时候，我们需要检索的是一个更加复杂的情况。随便说一个词，获得一个语音片段，这个词在语料库中存在，但是识别解码器可能并不能准确识别出这个词，那么检索就会发生问题，那怎么办？这时候，要回到最初的方法，DTW。DTW有各种变种，常见的是对匹配细节的一些处理，对信号表示的一些处理，对模板选择的处理等等。典型的有Segmental DTW：它用Posteriogram来代替原本的MFCC进行路径寻找；设置一个R值，让语音的时长差异控制在一个范围之类；它会变换起点，寻找到匹配最好的一个区域，等等。</p>
+<p>以上是关于关键词检索的理论的介绍，如果想要深入继续了解，可以参考相应的论文。</p>
+<h3 id="3-基于WFST的检索方法实践"><a href="#3-基于WFST的检索方法实践" class="headerlink" title="3 基于WFST的检索方法实践"></a>3 基于WFST的检索方法实践</h3><p>下面就配合脚本，对Kaldi中实现的关键词检索系统进行一个简单的介绍。Kaldi中实现的关键词检索系统是基于LVCSR系统和WFST实现的。意思就是说，我们需要有一个完整的语音识别系统，或者，至少有系统生成的lattice和其他words.txt, lexicon等文件。因为这里的检索就是基于lattice实现的。</p>
+<p>Kaldi在示例当中有一个Babel系统，是关键词检索相关的。在Babel系统当中，关键词检索的脚本都比较复杂，而且脚本和数据本身配合非常紧密。如果很难获取到Babel指定的数据，那些脚本很难跑下来。在这里我就分享一下我自己写的一些简单脚本的片段。如果您已经拥有了一个比较好的语音识别系统，您可以参考一下下面的脚本，简单拼接一下就可以完成关键词检索的任务了。</p>
+<p>下面主要分了三个部分，分别是三个脚本的片段。三个片段分别关于基本的检索，基于子词的检索和对OOV的检索（OOV的意思是集外词，意思是在训练的字典当中不存在的词）。片段中会有一些简单的注释方便理解。</p>
+<h4 id="3-1-基本检索"><a href="#3-1-基本检索" class="headerlink" title="3.1 基本检索"></a>3.1 基本检索</h4><p>基本的检索脚本如下所示，整个流程的相关信息写在注释当中。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一些路径的配置</span></span><br><span class="line">lang_dir=data/lang</span><br><span class="line">data_dir=data/dev2h</span><br><span class="line">decode_dir=exp/chain_cleaned/tdnn1f_sp_bi/decode_dev2h</span><br><span class="line">kws_dir=data/kws.oov</span><br><span class="line">kws_work_dir=kws_oov</span><br><span class="line"></span><br><span class="line">stage=0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取检索语音的时长</span></span><br><span class="line">duration=`feat-to-len scp:data/dev2h/feats.scp  ark,t:- | awk <span class="string">'&#123;x+=$2&#125; END&#123;print x/100;&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 通过数据生成相应的检索词表</span></span><br><span class="line">    <span class="built_in">local</span>/generate_example_kws.sh <span class="variable">$data_dir</span> <span class="variable">$kws_dir</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 1 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 进行关键词检索的数据准备，这一步需要先自行准备kwlist.xml文件，这也是唯一需要手动准备的文件。这个文件格式可以参考Kaldi官网。</span></span><br><span class="line">    <span class="built_in">local</span>/kws_data_prep.sh <span class="variable">$lang_dir</span> <span class="variable">$data_dir</span> <span class="variable">$kws_dir</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 2 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 生成关键词检索索引，这里的decode文件夹需要有语音识别生成的lattice</span></span><br><span class="line">    steps/make_index.sh --cmd <span class="string">"<span class="variable">$decode_cmd</span>"</span> --acwt 0.1 \</span><br><span class="line">        <span class="variable">$kws_dir</span> <span class="variable">$lang_dir</span> \</span><br><span class="line">        <span class="variable">$decode_dir</span> \</span><br><span class="line">        <span class="variable">$decode_dir</span>/<span class="variable">$kws_work_dir</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 3 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 在索引中进行检索</span></span><br><span class="line">    steps/search_index.sh --cmd <span class="string">"<span class="variable">$decode_cmd</span>"</span> \</span><br><span class="line">        <span class="variable">$kws_dir</span> \</span><br><span class="line">        <span class="variable">$decode_dir</span>/<span class="variable">$kws_work_dir</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 4 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 将生成的结果写入文件kwslist.xml当中</span></span><br><span class="line">    mkdir <span class="variable">$decode_dir</span>/kws/folder_result</span><br><span class="line">    cp <span class="variable">$decode_dir</span>/kws/result* <span class="variable">$decode_dir</span>/kws/folder_result</span><br><span class="line">    gzip -d <span class="variable">$decode_dir</span>/kws/folder_result/* </span><br><span class="line">    cat <span class="variable">$decode_dir</span>/<span class="variable">$kws_work_dir</span>/folder_result/result.* | \</span><br><span class="line">    utils/write_kwslist.pl --flen=0.01 --duration=<span class="variable">$duration</span> \</span><br><span class="line">        --normalize=<span class="literal">true</span> --map-utter=<span class="variable">$kws_dir</span>/utter_id \</span><br><span class="line">        - <span class="variable">$decode_dir</span>/<span class="variable">$kws_work_dir</span>/kwslist.xml</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Done."</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="3-2-OOV检索"><a href="#3-2-OOV检索" class="headerlink" title="3.2 OOV检索"></a>3.2 OOV检索</h4><p>上面我们已经简单介绍了基于OOV的检索的基本原理，脚本非常清晰展现了每一个步骤，要点也已经写在注释中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成混淆矩阵E，注意，这里需要的脚本最好是Babel系统s5c的脚本。s5d的脚本是跑不通的...</span></span><br><span class="line"><span class="keyword">if</span> [ ! -f exp/conf_matrix/.<span class="keyword">done</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">local</span>/generate_confusion_matrix_s5c.sh --cmd <span class="string">"<span class="variable">$decode_cmd</span>"</span> --nj <span class="variable">$my_nj</span>  \</span><br><span class="line">        exp/sgmm5_denlats/dengraph  exp/sgmm5 exp/sgmm5_ali exp/sgmm5_denlats  exp/conf_matrix || <span class="built_in">exit</span> 1</span><br><span class="line">    touch exp/conf_matrix/.<span class="keyword">done</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">confusion=exp/conf_matrix/confusions.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练G2P模型</span></span><br><span class="line"><span class="keyword">if</span> [ ! -f exp/g2p/.<span class="keyword">done</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">if</span> [ -f data/.extlex ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">local</span>/train_g2p.sh  data/<span class="built_in">local</span>/lexicon_orig.txt exp/g2p || <span class="built_in">exit</span> 1;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">local</span>/train_g2p.sh  data/<span class="built_in">local</span>/lexicon.txt exp/g2p || <span class="built_in">exit</span> 1;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用G2P模型，生成集外词的lexicon</span></span><br><span class="line"><span class="built_in">local</span>/apply_g2p.sh --nj <span class="variable">$my_nj</span> --cmd <span class="string">"<span class="variable">$decode_cmd</span>"</span> \</span><br><span class="line">    --var-counts <span class="variable">$g2p_nbest</span> --var-mass <span class="variable">$g2p_mass</span> \</span><br><span class="line">    <span class="variable">$kwsdatadir</span>/oov.txt exp/g2p <span class="variable">$kwsdatadir</span>/g2p || <span class="built_in">exit</span> 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取L2</span></span><br><span class="line">L2_lex=<span class="variable">$kwsdatadir</span>/g2p/lexicon.lex</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取L1</span></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$L1_lex</span>"</span> ] ; <span class="keyword">then</span></span><br><span class="line">    L1_lex=data/<span class="built_in">local</span>/lexiconp.txt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成虚拟词</span></span><br><span class="line"><span class="built_in">local</span>/kws_data_prep_proxy.sh \</span><br><span class="line">    --cmd <span class="string">"<span class="variable">$decode_cmd</span>"</span> --nj <span class="variable">$my_nj</span> \</span><br><span class="line">    --<span class="keyword">case</span>-insensitive <span class="literal">true</span> \</span><br><span class="line">    --confusion-matrix <span class="variable">$confusion</span> \</span><br><span class="line">    --phone-cutoff <span class="variable">$phone_cutoff</span> \</span><br><span class="line">    --pron-probs <span class="literal">true</span> --beam <span class="variable">$proxy_beam</span> --nbest <span class="variable">$proxy_nbest</span> \</span><br><span class="line">    --phone-beam <span class="variable">$proxy_phone_beam</span> --phone-nbest <span class="variable">$proxy_phone_nbest</span> \</span><br><span class="line">    <span class="variable">$lang</span> <span class="variable">$data_dir</span> <span class="variable">$L1_lex</span> <span class="variable">$L2_lex</span> <span class="variable">$kwsdatadir</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'Done.'</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-3-基于Sub-word检索"><a href="#3-3-基于Sub-word检索" class="headerlink" title="3.3 基于Sub-word检索"></a>3.3 基于Sub-word检索</h4><p>基于子词的关键词检索系统主要分为两种，一种是基于phone的，一种是基于syllable的。基于phone的关键词检索是基于syllable检索的一种特殊情况。可以理解为phone是粒度比较小的syllable。</p>
+<p>需要注意的是，在下面生成完基于子词的lattice和语言模型之后，词汇是发生了完全的改变的了。我们有一个一个新的词汇表，那就是子词的词汇表。在进行关键词检索数据准备的时候，只需要把要检索的子词序列（一个词分解开的）写入相应的xml节点当中即可。在网上很少涉及基于子词的数据准备，这里提一下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进行路径配置</span></span><br><span class="line">stage=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 0 ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 生成基于phone的语言模型</span></span><br><span class="line">    <span class="built_in">local</span>/syllab/generate_phone_lang.sh \</span><br><span class="line">        data/train data/<span class="built_in">local</span>/ data/lang data/lang.phn data/<span class="built_in">local</span>/dict.phn</span><br><span class="line"></span><br><span class="line">    <span class="built_in">local</span>/syllab/ali_to_syllabs.sh \</span><br><span class="line">        data/train data/lang.phn exp/tri5_ali exp/tri5_ali_phn</span><br><span class="line"></span><br><span class="line">    utils/copy_data_dir.sh data/train data/train.phn</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 训练基于phone的语言模型</span></span><br><span class="line">    <span class="built_in">local</span>/train_lms_srilm.sh \</span><br><span class="line">        --words-file data/lang.phn/words.txt --train-text data/train.phn/text \</span><br><span class="line">        --oov-symbol <span class="string">"`cat data/lang.phn/oov.txt`"</span>  data data/srilm.phn</span><br><span class="line"></span><br><span class="line">    <span class="built_in">local</span>/arpa2G.sh  data/srilm.phn/lm.gz  data/lang.phn/ data/lang.phn/</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$stage</span> -le 1 ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 将生成的lattice转换成基于phone的lattice</span></span><br><span class="line">    <span class="built_in">local</span>/syllab/lattice_word2syll.sh data/lang data/lang.phn \</span><br><span class="line">        exp/chain_cleaned/tdnn1f_sp_bi/decode_dev2h \</span><br><span class="line">        exp/chain_cleaned/tdnn1f_sp_bi_phn</span><br><span class="line"><span class="keyword">fi</span> </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'Done.'</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4 Reference"></a>4 Reference</h3><p><a href="http://kaldi-asr.org/doc/kws.html" target="_blank" rel="noopener">Keyword Search in Kaldi</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/关键词检索/">关键词检索</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/04/qbe-std-papers/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">关键词检索QbE-STD论文笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/12/10/wfst-catalogue/">
+        <span class="next-text nav-default">WFST详解#目录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2017/12/21/kws-intro/';
+
+  var disqus_title = "语音关键词检索简介";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
