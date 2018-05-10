@@ -43,7 +43,7 @@
 <meta property="og:site_name" content="harryfyodor">
 <meta property="og:description" content="最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。 说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。 说话人识别技术传统方法的整体流程">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-10T12:36:05.598Z">
+<meta property="og:updated_time" content="2018-05-10T12:38:14.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说话人识别">
 <meta name="twitter:description" content="最近毕设的工作接近了尾声，下面就是等待答辩了。在毕业前剩下的这段时间里，我准备开始找点时间看一些有关说话人识别的知识。这里就顺便做一下总结。 说话人识别，顾名思义，就是通过声音来分辨人。苹果的Siri就自带说话人识别的功能，只有注册用户才能够通过“Hey, Siri.”唤醒Siri功能。对于语音识别应用来说，从隐私和实用性角度，说话人识别技术都有着非常重要的作用。 说话人识别技术传统方法的整体流程">
@@ -135,7 +135,7 @@
 <p>说话人识别技术传统方法的整体流程如下所示：</p>
 <ol>
 <li>使用数据训练一个与说话人无关的UBM模型。</li>
-<li>使用说话人自适应的算法（MAP或者MLLR）对特定说话人训练GMM，并每个GMM成分的均值组合成一个向量，被称为均值超矢量。</li>
+<li>使用说话人自适应的算法（MAP或者MLLR）对特定说话人训练GMM，将每个GMM成分的均值组合成一个矢量，这个矢量被称为均值超矢量。</li>
 <li>从均值超矢量提取i-vector特征。i-vector的提取算法可以看做是JFA（联合因子分析）的简化版本。</li>
 <li>使用LDA或者PLDA鉴别。使用LDA/PLDA将测试语音和训练模型的i-vector特征重新投影之后，对比其cosine距离，就可以打分了。设置阈值，判别是不是同一个人。</li>
 </ol>
