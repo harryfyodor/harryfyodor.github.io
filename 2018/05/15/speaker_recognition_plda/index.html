@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="说话人识别#3"/>
+
+
+
+
+  <meta name="keywords" content="机器学习,语音识别,说话人识别," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/"/>
+
+
+<meta name="description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
+<meta name="keywords" content="机器学习,语音识别,说话人识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说话人识别#3">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-15T13:46:29.172Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说话人识别#3">
+<meta name="twitter:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 说话人识别#3 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          说话人识别#3
+        
+      </h1>
+
+      <time class="post-time">
+          May 15 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。</p>
+<p>分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常经典的分类器。</p>
+<h3 id="PLDA算法"><a href="#PLDA算法" class="headerlink" title="PLDA算法"></a>PLDA算法</h3><p>在i-vector提取的时候，假设信道的信息中包含了说话人的信息。而PLDA方法，则需要对这个i-vector中的信道信息进行分离。PLDA方法的基本公式如下所示：</p>
+<script type="math/tex; mode=display">\omega_{ij} = u + Vy_{i} + Ux_{ij} + z_{ij}</script><p>u是i-vector的均值，y是与说话人相关的信息，x和z是与语音信道和噪声相关的信息。V和U代表说话人类间空间和类内空间。</p>
+<p>我们可以看到，这个方法本质上也是一个JFA方法。要得到其中的V和U两个矩阵，我们使用的方法也是EM算法。在这里不再进行深入叙述。</p>
+<p>因此，说话人识别传统方法中使用了两个因子分析：一开始通过因子分析，从GMM-UBM均值超矢量中提取i-vector；之后再用因子分析，从i-vector特征中提取和说话人特征。这个特征是更加纯粹的，只与说话人识别的特征。</p>
+<h3 id="如何识别"><a href="#如何识别" class="headerlink" title="如何识别"></a>如何识别</h3><p>得到了PLDA说话人特征，接下来就是判断是否两个特征是否属于同一个的任务。我们保留每一个注册语音的说话人特征。然后对于每一个测试语音i-vector特征，</p>
+<p>简单来说，我们可以使用余弦距离：</p>
+<script type="math/tex; mode=display">Score(\omege_{tar}, \omega_{test}) = \frac{<\omega_{tar}, \omega_{test}>}{||\omega_{tar}||||\omega_{test}||}</script><p>我们也可以使用特征似然度计算得分，u是i-vector的均值，其中<script type="math/tex">Sigma_{lol}=VV_{*}+D^{-1}</script>，<script type="math/tex">Sigma_{ac}=VV_{*}</script>：</p>
+<script type="math/tex; mode=display">Score=log\frac{p(\omega_{1},\omega_{2}|\theta_{tar})}{p(\omega_{1},\omega_{2}|\theta_{non})}=logN(\begin{bmatrix}
+\omega_{1}\\ 
+\omega_{2}
+\end{bmatrix};\begin{bmatrix}
+u\\ 
+u
+\end{bmatrix},\begin{bmatrix}
+\Sigma_{lol} & \Sigma_{ac}\\ 
+\Sigma_{ac} & \Sigma_{lol}
+\end{bmatrix}) - logN(\begin{bmatrix}
+\omega_{1}\\ 
+\omega_{2}
+\end{bmatrix};\begin{bmatrix}
+u\\ 
+u
+\end{bmatrix},\begin{bmatrix}
+\Sigma_{lol} & 0\\ 
+0 & \Sigma_{lol}
+\end{bmatrix})</script><h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p>《基于i-vector和PLDA的说话人确认方法》</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/说话人识别/">说话人识别</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/05/15/speaker_recognition_ivector/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">说话人识别#2</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/05/13/speaker_recognition_gmmubm/">
+        <span class="next-text nav-default">说话人识别#1</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2018/05/15/speaker_recognition_plda/';
+
+  var disqus_title = "说话人识别#3";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
