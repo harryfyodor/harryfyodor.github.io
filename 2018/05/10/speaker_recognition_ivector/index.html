@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="说话人识别#2"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,说话人识别,机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/10/speaker_recognition_ivector/"/>
+
+
+<meta name="description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
+<meta name="keywords" content="语音识别,说话人识别,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说话人识别#2">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/10/speaker_recognition_ivector/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-15T05:27:16.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说话人识别#2">
+<meta name="twitter:description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 说话人识别#2 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          说话人识别#2
+        
+      </h1>
+
+      <time class="post-time">
+          May 10 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。</p>
+<h3 id="1-联合因子分析"><a href="#1-联合因子分析" class="headerlink" title="1. 联合因子分析"></a>1. 联合因子分析</h3><p>使用联合因子分析，我们一般假设一个均值超矢量包含了以下一些成分的信息：与说话人无关的信息，只与说话人有关的信息，信道的信息，残差项的信息。用公式来表示如下所示：</p>
+<script type="math/tex; mode=display">s = m + Vy + Ux + Dz</script><ul>
+<li><script type="math/tex">s</script>是对应说话人的GMM均值超矢量，需要分解的对象。</li>
+<li><script type="math/tex">m</script>是说话人无关的信息，这里是UBM的均值超矢量。</li>
+<li><script type="math/tex">V</script>是本征语音信号矩阵，可以看做是一种转换</li>
+<li><script type="math/tex">y</script>是说话人因子，假设其先验分布为标准正态分布</li>
+<li><script type="math/tex">V</script>是本征信道信号矩阵，可以看做是一种转换</li>
+<li><script type="math/tex">x</script>是信道因子，假设其先验分布为标准正态分布</li>
+<li><script type="math/tex">D</script>是残差矩阵，为对角阵</li>
+<li><script type="math/tex">z</script>是说话人相关的残差因子，假设其先验分布为标准正态分布</li>
+</ul>
+<p>使用JFA方法，就是训练V，U，D矩阵，然后用这些信息计算y，x，z的数值。y是主要的说话人特征，是后面需要用到用来判别的特征。JFA方法需要估计三个矩阵，计算量上是比较大的。在此基础之上，i-vector方法能够相对来说达到更高的效率。</p>
+<h3 id="2-i-vector的提取"><a href="#2-i-vector的提取" class="headerlink" title="2. i-vector的提取"></a>2. i-vector的提取</h3><p>i-vector，是identity-vector，意思就是表示说话人身份的矩阵。听闻提出这个概念的时候iphone刚刚开始火起来，因此作者就起了这么个名字。i-vector的提取方法本质上也是一种因子分析的方法，但是它和JFA的不同之处在于，它假设信道当中也有很多说话人相关的特征，因此不需要单独提取出来。简单地假设特征由与说话人有关，与说话人相关组成即可。</p>
+<script type="math/tex; mode=display">s = m + Ty</script><p>s和m与上面定义相同，T也可以看做是一个转换矩阵，y则是需要提取的特征i-vector。可以我们训练的目的就是得到T矩阵，方便我们提取i-vector特征。<br>下面介绍i-vector提取中，最重要的就是T矩阵的求解。这里我们对它的求解流程进行简单的介绍。对它的推导的介绍在这里就不展开了。</p>
+<h4 id="2-1-求解计算统计量"><a href="#2-1-求解计算统计量" class="headerlink" title="2.1 求解计算统计量"></a>2.1 求解计算统计量</h4><p>对于每一个说话人的语音特征，我们做一个统计量的计算。一般而言需要计算零阶统计量，一阶统计量，（当然也可以加入二阶统计量，但是非必须）。</p>
+<script type="math/tex; mode=display">N_{c}(s)=\sum_{t\in s}\gamma_{t}(c)</script><p>对说话人s的每一个语音特征，计算该特征在GMM上对应成分的概率，累积。</p>
+<script type="math/tex; mode=display">F_{c}(s)=\sum_{t\in s}\gamma_{t}(c)Y_{t}</script><p>在零阶统计量的基础上，乘上该时间点的相关特征值。</p>
+<h4 id="2-2-统计量的中心化"><a href="#2-2-统计量的中心化" class="headerlink" title="2.2 统计量的中心化"></a>2.2 统计量的中心化</h4><script type="math/tex; mode=display">\tilde{F}_{c}(s)=F_{c}(s)-N_{c}(s)m_{c}</script><p>使用UBM的对应均值<script type="math/tex">m_{c}</script>和零阶统计量中心化一阶统计量。</p>
+<h4 id="2-3-将统计量拓展称为矩阵"><a href="#2-3-将统计量拓展称为矩阵" class="headerlink" title="2.3 将统计量拓展称为矩阵"></a>2.3 将统计量拓展称为矩阵</h4><script type="math/tex; mode=display">NN(s) = \begin{bmatrix}
+N_{1}(s)*I &  & \\ 
+ &  ...& \\ 
+ &  & N_{c}(s)*I
+\end{bmatrix}</script><p>其中I是单位矩阵。</p>
+<script type="math/tex; mode=display">FF(s)=\begin{bmatrix}
+\tilde{F}_{1}(s)\\ 
+...\\ 
+\tilde{F}_{c}(s)
+\end{bmatrix}</script><h4 id="2-4-初始化说话人因子y"><a href="#2-4-初始化说话人因子y" class="headerlink" title="2.4 初始化说话人因子y"></a>2.4 初始化说话人因子y</h4><p>最开始使用随机数来初始化矩阵T：</p>
+<script type="math/tex; mode=display">I_{T}(s)=I+T^{*}*\Sigma^{-1}*NN(s)*T</script><p>y的后验分布是高斯，而我们需要的特征值实质上就是y的期望：</p>
+<script type="math/tex; mode=display">y(s)\sim Normal(I_{T}^{-1}(s)*T^{*}*\Sigma^{-1}*FF(s),I_{T}^{-1}(s))</script><script type="math/tex; mode=display">\bar{y}(s)=E[y(s)]=I_{T}^{-1}(s)*T^{*}*\Sigma^{-1}*FF(s)</script><h4 id="2-5-计算T矩阵"><a href="#2-5-计算T矩阵" class="headerlink" title="2.5 计算T矩阵"></a>2.5 计算T矩阵</h4><p>把领阶统计量乘上y(t)的方差：</p>
+<script type="math/tex; mode=display">A_{c}=\sum_{s}N_{c}(s)l_{T}^{-1}(s)</script><script type="math/tex; mode=display">M=\sum_{s}FF(s)*(I_{T}^{-1}(s)*T^{*}*\Sigma^{-1}*FF(s))^{*}</script><p>计算T矩阵：</p>
+<script type="math/tex; mode=display">T = \begin{bmatrix}
+T_{1}\\ 
+..\\ 
+T_{c}
+\end{bmatrix}= \begin{bmatrix}
+A_{1}^{-1}*M_{1}\\ 
+...\\ 
+A_{c}^{-1}*M_{c}
+\end{bmatrix}</script><p>我们得到了T矩阵，就能够再此估计说话人因子y，然后又可以计算T矩阵，之后又是T矩阵……经过几个迭代之后，我们就能够获得一个很好的T矩阵。有了T矩阵，计算y矩阵就非常简单了。这样我们就能够得到我们需要的说话人特征i-vector了。</p>
+<p>其中值得注意的一点是：这个T矩阵从另一个方面来说，也完成了一个特征降维的工作。超均值矢量是一个非常大的向量，降维对于后期计算的效率的提高也很有帮助。</p>
+<p>以上就是i-vector的提取的相关方法。</p>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference:"></a>reference:</h3><ul>
+<li><a href="http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf" target="_blank" rel="noopener">http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf</a></li>
+<li><a href="https://blog.csdn.net/xmu_jupiter/article/details/47209961" target="_blank" rel="noopener">https://blog.csdn.net/xmu_jupiter/article/details/47209961</a></li>
+</ul>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/说话人识别/">说话人识别</a>
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/05/13/speaker_recognition_gmmubm/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">说话人识别#1</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/05/10/speaker_recognition/">
+        <span class="next-text nav-default">说话人识别#0</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2018/05/10/speaker_recognition_ivector/';
+
+  var disqus_title = "说话人识别#2";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

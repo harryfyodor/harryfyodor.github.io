@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="说话人识别#1"/>
+
+
+
+
+  <meta name="keywords" content="语音识别,说话人识别,机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="harryfyodor">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/"/>
+
+
+<meta name="description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
+<meta name="keywords" content="语音识别,说话人识别,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说话人识别#1">
+<meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/index.html">
+<meta property="og:site_name" content="harryfyodor">
+<meta property="og:description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-14T11:33:52.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说话人识别#1">
+<meta name="twitter:description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 说话人识别#1 - harryfyodor </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">harryfyodor</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          说话人识别#1
+        
+      </h1>
+
+      <time class="post-time">
+          May 13 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相关的特征。而GMM-UBM，就是用来提取这个“更大的特征”的模型。</p>
+<h3 id="什么是GMM-UBM模型"><a href="#什么是GMM-UBM模型" class="headerlink" title="什么是GMM-UBM模型"></a>什么是GMM-UBM模型</h3><p>什么是GMM-UBM模型？我们可以这样理解，UBM模型是一个更加普遍的GMM模型。而每一个人，根据自己的说话人特征，对UBM进行调整，成为一个新的独立的GMM模型。为什么不针对每个人直接训练一个GMM模型呢？那是因为我们常常会有很多未标记数据，而较少的个人数据。使用这种GMM-UBM的训练方法，能够很好地利用这些未标记的数据，并且迁移到更具体的人的身上。</p>
+<p>训练UBM模型的方法和训练GMM的方法是一致的，都是通过EM算法，不停地更新三组GMM的参数，权重，均值，方差，最后达到收敛。而我们使用的数据是部分个人的，整体的。之后，我们再使用自适应算法，比如MAP算法，比如说MLLR算法，对原本UBM的参数进行自适应调整，结果就是我们对每一个人都适应了一个模型。之后，我们提取这个GMM模型的所有成分的均值信息，拼接起来，就可以得到那个我们需要的”最大的特征“。这个最大的特征就是均值超矢量。</p>
+<h3 id="有什么自适应算法"><a href="#有什么自适应算法" class="headerlink" title="有什么自适应算法"></a>有什么自适应算法</h3><p>我们一般常用的自适应算法主要有MAP算法和MLLR算法两种。下面分别对他们进行简单的介绍。</p>
+<h4 id="MAP算法"><a href="#MAP算法" class="headerlink" title="MAP算法"></a>MAP算法</h4><p>当一个新的数据点来到的时候，我们需要首先确定当前的数据点是属于UBM分布的哪一个分量。然后，我们根据下面的公式对该分布的参数进行响应的更新，更新的公式如下所示:</p>
+<script type="math/tex; mode=display">\tilde{\mu } = \frac{\tau\mu_{0}+\sum_{n}\gamma(n)x_{n}}{\tau+\sum_{n}\gamma(n)}</script><p>其中，<script type="math/tex">\tau</script> 是超参，控制UBM和特定人语音数据之间的平衡。<script type="math/tex">\mu \_{0}</script> 是UBM的均值，在之前使用EM算法求得的结果。<script type="math/tex">x_{n}</script> 是自适应的新的个人的数据。<script type="math/tex">\gamma</script>是当前数据特征在当前GMM中成分的概率。</p>
+<h4 id="MLLR算法"><a href="#MLLR算法" class="headerlink" title="MLLR算法"></a>MLLR算法</h4><p>MAP算法有一个缺点，针对每一个数据点来说，它所更新的成分是固定的。而又由于实际中，一个UBM中的成分很多，因此，每次更新到的参数对比之下少太多了。于是，MLLR算法就像通过线性的方法，去训练一个统一的转换模型。<br>对每一个UBM的成分，对它的均值做一个线性的变换。下面参数<script type="math/tex">A</script>以及<script type="math/tex">b</script>就是我们要求解的转换。</p>
+<script type="math/tex; mode=display">\hat{\mu} = A\mu + b</script><p>我们通过最大化它的似然函数，来求得最优的线性转换。它的似然函数如下所示。</p>
+<script type="math/tex; mode=display">L=\sum_{r}\sum_{n}\gamma_{r}(n)log(K_{r}exp(-\frac{1}{2}(x_{n}-W\eta_{r})\Sigma_{r}^{-1} (x_{n}-W\eta_{r})))</script><p>其中</p>
+<script type="math/tex; mode=display">\eta = [1\mu^{T} ]^{T}</script><script type="math/tex; mode=display">W = [bA]</script><p>我们对它进行求导数，结果等于0,就可以求出<script type="math/tex">W</script>。同样的，我们也可以对方差做同样的操作。上面的似然函数如果想要知道是怎么得来的，需要自己查阅相关的文献，这里不展开。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这篇博客简单介绍了GMM-UBM的训练过程，通过上面的方法，我们可以得到每一个说话人的一个特定的GMM(通过UBM自适应而来)。我们把GMM的均值拼接，就得到了均值超矢量。之后要做的工作就是使用因子分析在这个特征上面提取说话人特征i-vector。</p>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p><a href="https://www.inf.ed.ac.uk/teaching/courses/asr/2015-16/asr10-adapt.pdf" target="_blank" rel="noopener">https://www.inf.ed.ac.uk/teaching/courses/asr/2015-16/asr10-adapt.pdf</a></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/说话人识别/">说话人识别</a>
+		  
+			<a href="/tags/机器学习/">机器学习</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/05/10/speaker_recognition_ivector/">
+        <span class="next-text nav-default">说话人识别#2</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="btn" id="load-disqus" onclick="disqus.load();">加载 Disqus 评论</button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2017 -
+    
+    2018
+    <span class="footer-author">harryfyodor.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    $("code").map(function(){
+      match = /^\$(.*)\$$/.exec($(this).html());
+      if (match){
+        //$(this).after("<span class=mathjax_inline>" + match + "</span>");
+        //$(this).hide();
+        $(this).replaceWith("<span class=hpl_mathjax_inline>" + $(this).html() + "</span>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).get(0)]);
+      }
+    });
+  });
+  </script>
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'harry-blog';
+  var disqus_identifier = '2018/05/13/speaker_recognition_gmmubm/';
+
+  var disqus_title = "说话人识别#1";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          $('#load-disqus').remove(); ///加载后移除按钮
+        }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
