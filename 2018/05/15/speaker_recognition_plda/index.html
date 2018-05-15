@@ -17,7 +17,7 @@
 
 
 
-  <meta name="keywords" content="机器学习,语音识别,说话人识别," />
+  <meta name="keywords" content="语音识别,机器学习,说话人识别," />
 
 
 
@@ -36,14 +36,14 @@
 
 
 <meta name="description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
-<meta name="keywords" content="机器学习,语音识别,说话人识别">
+<meta name="keywords" content="语音识别,机器学习,说话人识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说话人识别#3">
 <meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/index.html">
 <meta property="og:site_name" content="harryfyodor">
 <meta property="og:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-15T13:46:29.172Z">
+<meta property="og:updated_time" content="2018-05-15T13:49:18.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说话人识别#3">
 <meta name="twitter:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
@@ -138,7 +138,7 @@
 <p>因此，说话人识别传统方法中使用了两个因子分析：一开始通过因子分析，从GMM-UBM均值超矢量中提取i-vector；之后再用因子分析，从i-vector特征中提取和说话人特征。这个特征是更加纯粹的，只与说话人识别的特征。</p>
 <h3 id="如何识别"><a href="#如何识别" class="headerlink" title="如何识别"></a>如何识别</h3><p>得到了PLDA说话人特征，接下来就是判断是否两个特征是否属于同一个的任务。我们保留每一个注册语音的说话人特征。然后对于每一个测试语音i-vector特征，</p>
 <p>简单来说，我们可以使用余弦距离：</p>
-<script type="math/tex; mode=display">Score(\omege_{tar}, \omega_{test}) = \frac{<\omega_{tar}, \omega_{test}>}{||\omega_{tar}||||\omega_{test}||}</script><p>我们也可以使用特征似然度计算得分，u是i-vector的均值，其中<script type="math/tex">Sigma_{lol}=VV_{*}+D^{-1}</script>，<script type="math/tex">Sigma_{ac}=VV_{*}</script>：</p>
+<script type="math/tex; mode=display">Score(\omega_{tar}, \omega_{test}) = \frac{<\omega_{tar}, \omega_{test}>}{||\omega_{tar}||||\omega_{test}||}</script><p>我们也可以使用特征似然度计算得分，u是i-vector的均值，其中<script type="math/tex">\Sigma_{lol}=VV_{*}+D^{-1}</script>，<script type="math/tex">\Sigma_{ac}=VV_{*}</script>：</p>
 <script type="math/tex; mode=display">Score=log\frac{p(\omega_{1},\omega_{2}|\theta_{tar})}{p(\omega_{1},\omega_{2}|\theta_{non})}=logN(\begin{bmatrix}
 \omega_{1}\\ 
 \omega_{2}
@@ -167,9 +167,9 @@ u
 		
 		<div class="post-tags">
 		  
-			<a href="/tags/机器学习/">机器学习</a>
-		  
 			<a href="/tags/语音识别/">语音识别</a>
+		  
+			<a href="/tags/机器学习/">机器学习</a>
 		  
 			<a href="/tags/说话人识别/">说话人识别</a>
 		  
@@ -180,15 +180,9 @@ u
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2018/05/15/speaker_recognition_ivector/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">说话人识别#2</span>
-        <span class="prev-text nav-mobile">Prev</span>
-      </a>
     
-    
-      <a class="next" href="/2018/05/13/speaker_recognition_gmmubm/">
-        <span class="next-text nav-default">说话人识别#1</span>
+      <a class="next" href="/2018/05/15/speaker_recognition_ivector/">
+        <span class="next-text nav-default">说话人识别#2</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
