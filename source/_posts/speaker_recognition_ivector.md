@@ -4,12 +4,6 @@ date: 2018-5-15 14:19:00
 tags: ["说话人识别", "语音识别", "机器学习"]
 ---
 
-> 本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~
-> [说话人识别概述](http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/)
-> [说话人识别GMM-UBM](http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/)
-> [说话人识别i-vector](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/)
-> [说话人识别PLDA](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/)
-
 在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。
 
 ### 1. 联合因子分析
@@ -107,3 +101,10 @@ A_{c}^{-1}*M_{c}
 ### reference:
 * [http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf](http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf)
 * [https://blog.csdn.net/xmu_jupiter/article/details/47209961](https://blog.csdn.net/xmu_jupiter/article/details/47209961)
+
+
+> 本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~
+> 1. [说话人识别概述](http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/)
+> 2. [说话人识别GMM-UBM](http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/)
+> 3. [说话人识别i-vector](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/)
+> 4. [说话人识别PLDA](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/)
