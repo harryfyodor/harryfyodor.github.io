@@ -35,18 +35,18 @@
 <link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/"/>
 
 
-<meta name="description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统">
+<meta name="description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
 <meta name="keywords" content="语音识别,机器学习,说话人识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说话人识别#1 GMM-UBM">
 <meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/index.html">
 <meta property="og:site_name" content="harryfyodor">
-<meta property="og:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统">
+<meta property="og:description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-21T06:58:26.777Z">
+<meta property="og:updated_time" content="2018-05-21T07:03:17.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说话人识别#1 GMM-UBM">
-<meta name="twitter:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统">
+<meta name="twitter:description" content="本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -130,10 +130,7 @@
 
     
             <div class="post-content">
-            <blockquote>
-<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~<br><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a><br><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></p>
-</blockquote>
-<p>本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相关的特征。而GMM-UBM，就是用来提取这个“更大的特征”的模型。</p>
+            <p>本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相关的特征。而GMM-UBM，就是用来提取这个“更大的特征”的模型。</p>
 <h3 id="什么是GMM-UBM模型"><a href="#什么是GMM-UBM模型" class="headerlink" title="什么是GMM-UBM模型"></a>什么是GMM-UBM模型</h3><p>什么是GMM-UBM模型？我们可以这样理解，UBM模型是一个更加普遍的GMM模型。而每一个人，根据自己的说话人特征，对UBM进行调整，成为一个新的独立的GMM模型。为什么不针对每个人直接训练一个GMM模型呢？那是因为我们常常会有很多未标记数据，而较少的个人数据。使用这种GMM-UBM的训练方法，能够很好地利用这些未标记的数据，并且迁移到更具体的人的身上。</p>
 <p>训练UBM模型的方法和训练GMM的方法是一致的，都是通过EM算法，不停地更新三组GMM的参数，权重，均值，方差，最后达到收敛。而我们使用的数据是部分个人的，整体的。之后，我们再使用自适应算法，比如MAP算法，比如说MLLR算法，对原本UBM的参数进行自适应调整，结果就是我们对每一个人都适应了一个模型。之后，我们提取这个GMM模型的所有成分的均值信息，拼接起来，就可以得到那个我们需要的”最大的特征“。这个最大的特征就是均值超矢量。</p>
 <h3 id="有什么自适应算法"><a href="#有什么自适应算法" class="headerlink" title="有什么自适应算法"></a>有什么自适应算法</h3><p>我们一般常用的自适应算法主要有MAP算法和MLLR算法两种。下面分别对他们进行简单的介绍。</p>
@@ -145,6 +142,15 @@
 <script type="math/tex; mode=display">\eta = [1\mu^{T} ]^{T}</script><script type="math/tex; mode=display">W = [bA]</script><p>我们对它进行求导数，结果等于0,就可以求出<script type="math/tex">W</script>。同样的，我们也可以对方差做同样的操作。上面的似然函数如果想要知道是怎么得来的，需要自己查阅相关的文献，这里不展开。</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这篇博客简单介绍了GMM-UBM的训练过程，通过上面的方法，我们可以得到每一个说话人的一个特定的GMM(通过UBM自适应而来)。我们把GMM的均值拼接，就得到了均值超矢量。之后要做的工作就是使用因子分析在这个特征上面提取说话人特征i-vector。</p>
 <h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p><a href="https://www.inf.ed.ac.uk/teaching/courses/asr/2015-16/asr10-adapt.pdf" target="_blank" rel="noopener">https://www.inf.ed.ac.uk/teaching/courses/asr/2015-16/asr10-adapt.pdf</a></p>
+<blockquote>
+<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~</p>
+<ol>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></li>
+</ol>
+</blockquote>
 
             </div>
           
@@ -175,7 +181,7 @@
     
     
       <a class="next" href="/2018/05/10/speaker_recognition/">
-        <span class="next-text nav-default">说话人识别#0</span>
+        <span class="next-text nav-default">说话人识别#0 概述</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>

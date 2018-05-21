@@ -35,18 +35,18 @@
 <link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/"/>
 
 
-<meta name="description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-v">
+<meta name="description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
 <meta name="keywords" content="语音识别,机器学习,说话人识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说话人识别#3 PLAD">
 <meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/index.html">
 <meta property="og:site_name" content="harryfyodor">
-<meta property="og:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-v">
+<meta property="og:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-21T06:58:15.480Z">
+<meta property="og:updated_time" content="2018-05-21T07:02:50.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说话人识别#3 PLAD">
-<meta name="twitter:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-v">
+<meta name="twitter:description" content="上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。 分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -130,10 +130,7 @@
 
     
             <div class="post-content">
-            <blockquote>
-<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~<br><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a><br><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></p>
-</blockquote>
-<p>上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。</p>
+            <p>上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。</p>
 <p>分类的方法有很多，我们可以使用SVM，也可以使用更主流的PLDA。本篇博客主要简单介绍PLDA方法。这个方法也是人脸识别中非常经典的分类器。</p>
 <h3 id="PLDA算法"><a href="#PLDA算法" class="headerlink" title="PLDA算法"></a>PLDA算法</h3><p>在i-vector提取的时候，假设信道的信息中包含了说话人的信息。而PLDA方法，则需要对这个i-vector中的信道信息进行分离。PLDA方法的基本公式如下所示：</p>
 <script type="math/tex; mode=display">\omega_{ij} = u + Vy_{i} + Ux_{ij} + z_{ij}</script><p>u是i-vector的均值，y是与说话人相关的信息，x和z是与语音信道和噪声相关的信息。V和U代表说话人类间空间和类内空间。</p>
@@ -161,6 +158,15 @@ u
 \Sigma_{lol} & 0\\ 
 0 & \Sigma_{lol}
 \end{bmatrix})</script><h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p>《基于i-vector和PLDA的说话人确认方法》</p>
+<blockquote>
+<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~</p>
+<ol>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></li>
+</ol>
+</blockquote>
 
             </div>
           

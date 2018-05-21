@@ -35,18 +35,18 @@
 <link rel="canonical" href="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/"/>
 
 
-<meta name="description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特">
+<meta name="description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
 <meta name="keywords" content="语音识别,机器学习,说话人识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说话人识别#2 i-vector">
 <meta property="og:url" content="https://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/index.html">
 <meta property="og:site_name" content="harryfyodor">
-<meta property="og:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特">
+<meta property="og:description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-21T06:58:22.626Z">
+<meta property="og:updated_time" content="2018-05-21T07:03:04.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="说话人识别#2 i-vector">
-<meta name="twitter:description" content="本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~说话人识别概述说话人识别GMM-UBM说话人识别i-vector说话人识别PLDA  在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特">
+<meta name="twitter:description" content="在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。 1. 联合因子分析使用联合因子分析，我们一般假设一个均值超矢量包含了">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -130,10 +130,7 @@
 
     
             <div class="post-content">
-            <blockquote>
-<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~<br><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a><br><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a><br><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></p>
-</blockquote>
-<p>在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。</p>
+            <p>在前面的那篇博客当中，我们使用GMM-UBM的方法提取了一个均值超矢量。这个特征里面包含了很多的信息，包括一些与说话人无关的信息，比如说语言的信息，信道的信息。因此，直接使用这个特征进行判别是不完美的。提取说话人特征的方法，其实就是希望能够从这个特征当中，提取出一些只与说话人相关的特征。联合因子分析就是一个将特征分解的常用方法。</p>
 <h3 id="1-联合因子分析"><a href="#1-联合因子分析" class="headerlink" title="1. 联合因子分析"></a>1. 联合因子分析</h3><p>使用联合因子分析，我们一般假设一个均值超矢量包含了以下一些成分的信息：与说话人无关的信息，只与说话人有关的信息，信道的信息，残差项的信息。用公式来表示如下所示：</p>
 <script type="math/tex; mode=display">s = m + Vy + Ux + Dz</script><ul>
 <li><script type="math/tex">s</script>是对应说话人的GMM均值超矢量，需要分解的对象。</li>
@@ -180,6 +177,15 @@ A_{c}^{-1}*M_{c}
 <li><a href="http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf" target="_blank" rel="noopener">http://www1.icsi.berkeley.edu/Speech/presentations/AFRL_ICSI_visit2_JFA_tutorial_icsitalk.pdf</a></li>
 <li><a href="https://blog.csdn.net/xmu_jupiter/article/details/47209961" target="_blank" rel="noopener">https://blog.csdn.net/xmu_jupiter/article/details/47209961</a></li>
 </ul>
+<blockquote>
+<p>本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~</p>
+<ol>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/">说话人识别概述</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/">说话人识别GMM-UBM</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/">说话人识别i-vector</a></li>
+<li><a href="http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/">说话人识别PLDA</a></li>
+</ol>
+</blockquote>
 
             </div>
           
