@@ -24,6 +24,13 @@ tags: ["说话人识别", "语音识别", "机器学习"]
 
 针对说话人识别，我还会写一些文章详细介绍上面的传统方法，三五篇左右。希望能够一直更，不要坑（笑）。
 
+5月21日更新：下面是所有笔记的目录。
+
+> [说话人识别概述](http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/)
+> [说话人识别GMM-UBM](http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/)
+> [说话人识别i-vector](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/)
+> [说话人识别PLDA](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/)
+
 reference:
 * [说话人识别整体流程](https://www.zhihu.com/question/63978977)
 * [说话人识别相关概念](https://blog.csdn.net/xmu_jupiter/article/details/47209961)

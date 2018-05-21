@@ -1,8 +1,14 @@
 ---
-title: 说话人识别#3
+title: 说话人识别#3 PLAD
 date: 2018-5-15 21:49:00
 tags: ["说话人识别", "语音识别", "机器学习"]
 ---
+
+> 本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~
+> [说话人识别概述](http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/)
+> [说话人识别GMM-UBM](http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/)
+> [说话人识别i-vector](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/)
+> [说话人识别PLDA](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/)
 
 上一篇博客讲述了如何从均值超矢量中提取i-vector特征的方法。提取i-vector的方法是联合因子分子JFA的一种简化方式。它假设了，在信道空间当中存在着与说话人相关的特征，因此在分析的时候不做直接的区分。获得i-vector之后，就要对i-vector进行分类判别。
 

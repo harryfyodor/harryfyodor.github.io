@@ -1,8 +1,15 @@
 ---
-title: 说话人识别#1
+title: 说话人识别#1 GMM-UBM
 date: 2018-5-13 00:50:00
 tags: ["说话人识别", "语音识别", "机器学习"]
 ---
+
+> 本文是说话人识别笔记之一。欢迎阅读，如有疏漏错误，请指正，感谢~
+> [说话人识别概述](http://pages.harryfyodor.xyz/2018/05/10/speaker_recognition/)
+> [说话人识别GMM-UBM](http://pages.harryfyodor.xyz/2018/05/13/speaker_recognition_gmmubm/)
+> [说话人识别i-vector](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_ivector/)
+> [说话人识别PLDA](http://pages.harryfyodor.xyz/2018/05/15/speaker_recognition_plda/)
+
 本篇文章会介绍说话人识别的传统方法。而说到说话人识别的传统方法，第一步就是进行构建GMM-UBM模型。说话人识别简单来说可以分成两个部分，一个部分是说话人特征的提取，一个部分是判断两个说话人特征是不是属于同一个人。说话人特征的提取格外的重要，对传统方法来说，这个说话人特征是i-vector。而提取i-vector，需要对一个“更大的特征”进行因子分析，排除掉除了说话人相关的特征，保留下与说话人最相关的特征。而GMM-UBM，就是用来提取这个“更大的特征”的模型。
 
 ### 什么是GMM-UBM模型
